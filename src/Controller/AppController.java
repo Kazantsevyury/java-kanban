@@ -16,6 +16,6 @@ public class AppController {
     }
 
     public void run() {
-        tester.runTests(storage, fieldModifier);
+        tester.runTests(storage,fieldModifier);
     }
 }

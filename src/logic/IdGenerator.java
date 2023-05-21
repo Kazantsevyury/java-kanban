@@ -1,7 +1,5 @@
 package logic;
 
-
-
 public class IdGenerator {
     private static int nextId = 1;
 

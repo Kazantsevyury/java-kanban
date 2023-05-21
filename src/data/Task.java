@@ -3,7 +3,7 @@ package data;
 import logic.IdGenerator;
 
 public class Task {
-    private int taskId;
+    protected int taskId;
     private String title;
     private String description;
     private String status;
@@ -42,4 +42,10 @@ public class Task {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    @Override
+    public String toString() {
+        return "Task ID: " + taskId + "\nTitle: " + title + "\nDescription: " + description + "\nStatus: " + status;
+    }
+
 }

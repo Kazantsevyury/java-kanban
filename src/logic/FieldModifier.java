@@ -1,11 +1,9 @@
 package logic;
-
 import data.Epic;
 import data.Storage;
-import data.Task;
 import data.SubTask;
-
-import java.lang.reflect.Field;
+import data.Task;
+import java.util.ArrayList;
 
 public class FieldModifier {
     private Storage storage;
@@ -14,32 +12,31 @@ public class FieldModifier {
         this.storage = storage;
     }
 
-    public void modifyField(int id, String fieldName, Object value) {
-        Task task = storage.getTask(id);
-        if (task != null) {
-            modifyObjectField(task, fieldName, value);
-            return;
-        }
-
-        SubTask subTask = storage.getSubTask(id);
-        if (subTask != null) {
-            modifyObjectField(subTask, fieldName, value);
-            return;
-        }
-
-        Epic epic = storage.getEpic(id);
-        if (epic != null) {
-            modifyObjectField(epic, fieldName, value);
+    public void updateTask(Task updatedTask) {
+        int taskId = updatedTask.getTaskId();
+        Task existingTask = storage.getTask(taskId);
+        if (existingTask != null) {
+            existingTask.setTitle(updatedTask.getTitle());
+            existingTask.setDescription(updatedTask.getDescription());
+            existingTask.setStatus(updatedTask.getStatus());
         }
     }
-
-    private void modifyObjectField(Object object, String fieldName, Object value) {
-        try {
-            Field field = object.getClass().getDeclaredField(fieldName);
-            field.setAccessible(true);
-            field.set(object, value);
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            e.printStackTrace();
+    public void updateEpic(Epic updatedEpic) {
+        int epicId = updatedEpic.getTaskId();
+        Epic existingEpic = storage.getEpic(epicId);
+        if (existingEpic != null) {
+            existingEpic.setTitle(updatedEpic.getTitle());
+            existingEpic.setDescription(updatedEpic.getDescription());
+            existingEpic.setStatus(updatedEpic.getStatus());
+        }
+    }
+    public void updateSubTask(SubTask updatedSubTask) {
+        int subTaskId = updatedSubTask.getTaskId();
+        SubTask existingSubTask = storage.getSubTask(subTaskId);
+        if (existingSubTask != null) {
+            existingSubTask.setTitle(updatedSubTask.getTitle());
+            existingSubTask.setDescription(updatedSubTask.getDescription());
+            existingSubTask.setStatus(updatedSubTask.getStatus());
         }
     }
 }
