@@ -3,7 +3,6 @@ import data.Epic;
 import data.Storage;
 import data.SubTask;
 import data.Task;
-import java.util.ArrayList;
 
 public class FieldModifier {
     private Storage storage;
@@ -12,31 +11,56 @@ public class FieldModifier {
         this.storage = storage;
     }
 
-    public void updateTask(Task updatedTask) {
-        int taskId = updatedTask.getTaskId();
+    public Task updateTask(int taskId, String field, Object value) {
         Task existingTask = storage.getTask(taskId);
         if (existingTask != null) {
-            existingTask.setTitle(updatedTask.getTitle());
-            existingTask.setDescription(updatedTask.getDescription());
-            existingTask.setStatus(updatedTask.getStatus());
+            if (field.equals("title")) {
+                existingTask.setTitle((String) value);
+            } else if (field.equals("description")) {
+                existingTask.setDescription((String) value);
+            } else if (field.equals("status")) {
+                existingTask.setStatus((String) value);
+            }
+            storage.removeTask(taskId);
+            storage.addTask(existingTask);
+            return storage.getTask(taskId);
         }
+        return null;
     }
-    public void updateEpic(Epic updatedEpic) {
-        int epicId = updatedEpic.getTaskId();
+
+    public Epic updateEpic(int epicId, String field, Object value) {
         Epic existingEpic = storage.getEpic(epicId);
         if (existingEpic != null) {
-            existingEpic.setTitle(updatedEpic.getTitle());
-            existingEpic.setDescription(updatedEpic.getDescription());
-            existingEpic.setStatus(updatedEpic.getStatus());
+            if (field.equals("title")) {
+                existingEpic.setTitle((String) value);
+            } else if (field.equals("description")) {
+                existingEpic.setDescription((String) value);
+            } else if (field.equals("status")) {
+                existingEpic.setStatus((String) value);
+            }
+            storage.removeEpic(epicId);
+            storage.addEpic(existingEpic);
+            storage.updateEpicStatus();
+            return storage.getEpic(epicId);
         }
+        return null;
     }
-    public void updateSubTask(SubTask updatedSubTask) {
-        int subTaskId = updatedSubTask.getTaskId();
+
+    public SubTask updateSubTask(int subTaskId, String field, Object value) {
         SubTask existingSubTask = storage.getSubTask(subTaskId);
         if (existingSubTask != null) {
-            existingSubTask.setTitle(updatedSubTask.getTitle());
-            existingSubTask.setDescription(updatedSubTask.getDescription());
-            existingSubTask.setStatus(updatedSubTask.getStatus());
+            if (field.equals("title")) {
+                existingSubTask.setTitle((String) value);
+            } else if (field.equals("description")) {
+                existingSubTask.setDescription((String) value);
+            } else if (field.equals("status")) {
+                existingSubTask.setStatus((String) value);
+            }
+            storage.removeSubTask(subTaskId);
+            storage.addSubTask(existingSubTask);
+            storage.updateEpicStatus();
+            return storage.getSubTask(subTaskId);
         }
+        return null;
     }
 }

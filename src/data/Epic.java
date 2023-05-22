@@ -1,10 +1,5 @@
 package data;
-
-import logic.IdGenerator;
-
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 public class Epic extends Task {
     private ArrayList<Integer> subTasks;
@@ -12,6 +7,12 @@ public class Epic extends Task {
     public Epic(String title, String description) {
         super(title, description);
         this.subTasks = new ArrayList<>();
+    }
+
+    public Epic(String title, String description, ArrayList<Integer> subTasks) {
+        super(title, description);
+        this.subTasks = subTasks;
+
     }
 
     public void setSubTasks(ArrayList<Integer> subTasks) {
