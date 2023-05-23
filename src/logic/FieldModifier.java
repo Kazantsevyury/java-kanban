@@ -1,18 +1,18 @@
 package logic;
 import data.Epic;
-import data.Storage;
+import Managers.Manager;
 import data.SubTask;
 import data.Task;
 
 public class FieldModifier {
-    private Storage storage;
+    private Manager manager;
 
-    public FieldModifier(Storage storage) {
-        this.storage = storage;
+    public FieldModifier(Manager manager) {
+        this.manager = manager;
     }
 
     public Task updateTask(int taskId, String field, Object value) {
-        Task existingTask = storage.getTask(taskId);
+        Task existingTask = manager.getTask(taskId);
         if (existingTask != null) {
             if (field.equals("title")) {
                 existingTask.setTitle((String) value);
@@ -21,15 +21,15 @@ public class FieldModifier {
             } else if (field.equals("status")) {
                 existingTask.setStatus((String) value);
             }
-            storage.removeTask(taskId);
-            storage.addTask(existingTask);
-            return storage.getTask(taskId);
+            manager.removeTask(taskId);
+            manager.addTask(existingTask);
+            return manager.getTask(taskId);
         }
         return null;
     }
 
     public Epic updateEpic(int epicId, String field, Object value) {
-        Epic existingEpic = storage.getEpic(epicId);
+        Epic existingEpic = manager.getEpic(epicId);
         if (existingEpic != null) {
             if (field.equals("title")) {
                 existingEpic.setTitle((String) value);
@@ -38,16 +38,16 @@ public class FieldModifier {
             } else if (field.equals("status")) {
                 existingEpic.setStatus((String) value);
             }
-            storage.removeEpic(epicId);
-            storage.addEpic(existingEpic);
-            storage.updateEpicStatus();
-            return storage.getEpic(epicId);
+            manager.removeEpic(epicId);
+            manager.addEpic(existingEpic);
+            manager.updateEpicStatus();
+            return manager.getEpic(epicId);
         }
         return null;
     }
 
     public SubTask updateSubTask(int subTaskId, String field, Object value) {
-        SubTask existingSubTask = storage.getSubTask(subTaskId);
+        SubTask existingSubTask = manager.getSubTask(subTaskId);
         if (existingSubTask != null) {
             if (field.equals("title")) {
                 existingSubTask.setTitle((String) value);
@@ -56,10 +56,10 @@ public class FieldModifier {
             } else if (field.equals("status")) {
                 existingSubTask.setStatus((String) value);
             }
-            storage.removeSubTask(subTaskId);
-            storage.addSubTask(existingSubTask);
-            storage.updateEpicStatus();
-            return storage.getSubTask(subTaskId);
+            manager.removeSubTask(subTaskId);
+            manager.addSubTask(existingSubTask);
+            manager.updateEpicStatus();
+            return manager.getSubTask(subTaskId);
         }
         return null;
     }

@@ -18,27 +18,22 @@ public class Task {
     public int getTaskId() {
         return taskId;
     }
-
     public String getTitle() {
         return title;
+    }
+    public String getDescription() {
+        return description;
+    }
+    public String getStatus() {
+        return status;
     }
 
     public void setTitle(String title) {
         this.title = title;
     }
-
-    public String getDescription() {
-        return description;
-    }
-
     public void setDescription(String description) {
         this.description = description;
     }
-
-    public String getStatus() {
-        return status;
-    }
-
     public void setStatus(String status) {
         this.status = status;
     }
@@ -47,5 +42,4 @@ public class Task {
     public String toString() {
         return "Task ID: " + taskId + "\nTitle: " + title + "\nDescription: " + description + "\nStatus: " + status;
     }
-
 }

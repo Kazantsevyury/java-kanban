@@ -1,21 +1,20 @@
 package controller;
 
-import data.Storage;
+import Managers.Manager;
 import logic.FieldModifier;
 import logic.Tester;
 
 public class AppController {
-    private Storage storage;
+    private Manager manager;
     private FieldModifier fieldModifier;
     private Tester tester;
 
     public AppController() {
-        storage = new Storage();
-        fieldModifier = new FieldModifier(storage);
+        manager = new Manager();
+        fieldModifier = new FieldModifier(manager);
         tester = new Tester();
     }
-
     public void run() {
-        tester.runTests(storage,fieldModifier);
+        tester.runTests(manager,fieldModifier);
     }
 }

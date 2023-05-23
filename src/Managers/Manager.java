@@ -1,14 +1,18 @@
-package data;
+package Managers;
+
+import data.Epic;
+import data.SubTask;
+import data.Task;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Storage {
+public class Manager {
     private HashMap<Integer, Task> tasks;
     private HashMap<Integer, SubTask> subTasks;
     private HashMap<Integer, Epic> epics;
 
-    public Storage() {
+    public Manager() {
         tasks = new HashMap<>();
         subTasks = new HashMap<>();
         epics = new HashMap<>();
@@ -17,8 +21,8 @@ public class Storage {
     public void addTask(Task task) {
         tasks.put(task.getTaskId(), task);
     }
-
     public void addSubTask(SubTask subTask) {
+
     subTasks.put(subTask.getTaskId(), subTask);
 
     int parentEpicID = subTask.getEpicId();
@@ -32,11 +36,12 @@ public class Storage {
         System.out.println("Parent Epic not found for SubTask: " + subTask.getTaskId());
     }
     updateEpicStatus();
-}
-    public void addEpic(Epic epic)                       {
+    }
+    public void addEpic(Epic epic){
         epics.put(epic.getTaskId(), epic);
         updateEpicStatus();
     }
+
     public Task getTask(int taskId) {
         return tasks.get(taskId);
     }
@@ -62,10 +67,10 @@ public class Storage {
         allTasks.addAll(subTasks.values());
         return allTasks;
     }
+
     public void clearAllTasks() {
         tasks.clear();
         updateEpicStatus();
-
     }
     public void clearAllEpics() {
         epics.clear();
@@ -75,6 +80,7 @@ public class Storage {
         subTasks.clear();
         updateEpicStatus();
     }
+
     public void removeTask(int taskId) {
         tasks.remove(taskId);
     }
@@ -98,7 +104,6 @@ public class Storage {
     public void removeSubTask(int subTaskId) {
         subTasks.remove(subTaskId);
         updateEpicStatus();
-
     }
 
     public void updateEpicStatus() {
@@ -127,7 +132,4 @@ public class Storage {
             }
         }
     }
-
 }
-
-
