@@ -1,20 +1,20 @@
 package controller;
 
-import Managers.Manager;
+import Managers.InMemoryTaskManager;
 import logic.FieldModifier;
 import logic.Tester;
 
 public class AppController {
-    private Manager manager;
+    private InMemoryTaskManager inMemoryTaskManager;
     private FieldModifier fieldModifier;
     private Tester tester;
 
     public AppController() {
-        manager = new Manager();
-        fieldModifier = new FieldModifier(manager);
+        inMemoryTaskManager = new InMemoryTaskManager();
+        fieldModifier = new FieldModifier(inMemoryTaskManager);
         tester = new Tester();
     }
     public void run() {
-        tester.runTests(manager,fieldModifier);
+        tester.runTests(inMemoryTaskManager,fieldModifier);
     }
 }

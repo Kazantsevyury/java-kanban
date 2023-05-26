@@ -1,28 +1,34 @@
 package Managers;
 
 import data.Epic;
+import data.Status;
 import data.SubTask;
 import data.Task;
+import data.LimitedSizeLinkedList;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 
-public class Manager {
+
+public class InMemoryTaskManager implements TaskManager  {
+    private LimitedSizeLinkedList history;
     private HashMap<Integer, Task> tasks;
     private HashMap<Integer, SubTask> subTasks;
     private HashMap<Integer, Epic> epics;
 
-    public Manager() {
+    public InMemoryTaskManager() {
+        history = new LimitedSizeLinkedList(10) ;
         tasks = new HashMap<>();
         subTasks = new HashMap<>();
         epics = new HashMap<>();
     }
-
+    @Override
     public void addTask(Task task) {
         tasks.put(task.getTaskId(), task);
     }
+    @Override
     public void addSubTask(SubTask subTask) {
-
     subTasks.put(subTask.getTaskId(), subTask);
 
     int parentEpicID = subTask.getEpicId();
@@ -37,53 +43,64 @@ public class Manager {
     }
     updateEpicStatus();
     }
+    @Override
     public void addEpic(Epic epic){
         epics.put(epic.getTaskId(), epic);
         updateEpicStatus();
     }
-
+    @Override
     public Task getTask(int taskId) {
+        saveInHistory(tasks.get(taskId));
         return tasks.get(taskId);
     }
+    @Override
     public SubTask getSubTask(int subTaskId) {
+        saveInHistory(subTasks.get(subTaskId));
         return subTasks.get(subTaskId);
     }
+    @Override
     public Epic getEpic(int epicId) {
+        saveInHistory(epics.get(epicId));
         return epics.get(epicId);
     }
-
+    @Override
     public ArrayList<Task> getAllTasks() {
         ArrayList<Task> allTasks = new ArrayList<>();
         allTasks.addAll(tasks.values());
         return allTasks;
     }
+    @Override
     public ArrayList<Task> getAllEpics() {
         ArrayList<Task> allTasks = new ArrayList<>();
         allTasks.addAll(epics.values());
         return allTasks;
     }
+    @Override
     public ArrayList<Task> getAllSubTasks() {
         ArrayList<Task> allTasks = new ArrayList<>();
         allTasks.addAll(subTasks.values());
         return allTasks;
     }
-
+    @Override
     public void clearAllTasks() {
         tasks.clear();
         updateEpicStatus();
     }
+    @Override
     public void clearAllEpics() {
         epics.clear();
         subTasks.clear();
     }
+    @Override
     public void clearAllSubTasks() {
         subTasks.clear();
         updateEpicStatus();
     }
-
+    @Override
     public void removeTask(int taskId) {
         tasks.remove(taskId);
     }
+    @Override
     public void removeEpic(int epicId) {
         ArrayList<Integer> subTaskIdsToRemove = new ArrayList<>();
 
@@ -101,11 +118,12 @@ public class Manager {
         updateEpicStatus();
 
     }
+    @Override
     public void removeSubTask(int subTaskId) {
         subTasks.remove(subTaskId);
         updateEpicStatus();
     }
-
+    @Override
     public void updateEpicStatus() {
         for (Epic epic : epics.values()) {
             ArrayList<Integer> subTaskIds = epic.getSubTasks();
@@ -115,21 +133,30 @@ public class Manager {
             for (int subTaskId : subTaskIds) {
                 SubTask subTask = subTasks.get(subTaskId);
                 if (subTask != null) {
-                    if (subTask.getStatus().equals("NEW")) {
+                    if (subTask.getStatus() == Status.NEW ) {
                         newSubTaskCount++;
-                    } else if (subTask.getStatus().equals("DONE")) {
+                    } else if (subTask.getStatus() == Status.DONE) {
                         doneSubTaskCount++;
                     }
                 }
             }
 
             if ((newSubTaskCount > 0)&&(doneSubTaskCount != 0) ) {
-                epic.setStatus("IN_PROGRESS");
+                epic.setStatus(Status.IN_PROGRESS);
             } else if (doneSubTaskCount == subTaskIds.size()) {
-                epic.setStatus("DONE");
+                epic.setStatus(Status.DONE);
             } else {
-                epic.setStatus("NEW");
+                epic.setStatus(Status.NEW);
             }
         }
     }
+    @Override
+    public LimitedSizeLinkedList getHistory(){
+        return history;
+    }
+    @Override
+    public void saveInHistory(Task task){
+        getHistory().add(task);
+    }
+
 }
