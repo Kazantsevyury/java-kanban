@@ -1,8 +1,8 @@
 package controller;
 
-import Managers.InMemoryTaskManager;
-import logic.FieldModifier;
-import logic.Tester;
+import manag.InMemoryTaskManager;
+import utilities.FieldModifier;
+import tests.Tester;
 
 public class AppController {
     private InMemoryTaskManager inMemoryTaskManager;

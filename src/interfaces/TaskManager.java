@@ -1,14 +1,10 @@
-package Managers;
+package interfaces;
 
 import data.Epic;
-import data.Status;
 import data.SubTask;
 import data.Task;
-import data.LimitedSizeLinkedList;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
 
 
 public interface TaskManager {
@@ -33,6 +29,5 @@ public interface TaskManager {
     void removeSubTask(int subTaskId);
 
     void updateEpicStatus();
-    LimitedSizeLinkedList getHistory();
-    void saveInHistory (Task task);
+
 }

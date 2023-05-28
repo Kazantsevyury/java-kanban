@@ -1,4 +1,4 @@
-package logic;
+package utilities;
 
 public class IdGenerator {
     private static int nextId = 1;

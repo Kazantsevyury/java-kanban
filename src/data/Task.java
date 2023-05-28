@@ -1,6 +1,7 @@
 package data;
 
-import logic.IdGenerator;
+import enums.Status;
+import utilities.IdGenerator;
 
 public class Task {
     protected int taskId;
