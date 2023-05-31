@@ -1,9 +1,9 @@
 package interfaces;
 
-import implementations.LimitedSizeLinkedList;
 import data.Task;
+import java.util.LinkedList;
 
 public interface HistoryManager {
     void add(Task task);
-    LimitedSizeLinkedList getHistory();
+    LinkedList getHistory();
 }
