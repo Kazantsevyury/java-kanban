@@ -1,4 +1,4 @@
-package interfaces;
+package managers;
 
 import data.Task;
 import java.util.LinkedList;

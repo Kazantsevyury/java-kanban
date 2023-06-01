@@ -1,6 +1,6 @@
 package controller;
 
-import manag.InMemoryTaskManager;
+import managers.implementation.InMemoryTaskManager;
 import utilities.FieldModifier;
 import tests.Tester;
 

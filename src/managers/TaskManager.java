@@ -1,4 +1,4 @@
-package interfaces;
+package managers;
 
 import data.Epic;
 import data.SubTask;

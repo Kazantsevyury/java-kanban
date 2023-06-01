@@ -1,6 +1,6 @@
 package utilities;
 import data.Epic;
-import manag.InMemoryTaskManager;
+import managers.implementation.InMemoryTaskManager;
 import enums.Status;
 import enums.Field;
 

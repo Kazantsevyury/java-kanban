@@ -1,5 +1,5 @@
-import manag.InMemoryTaskManager;
-import manag.Managers;
+import managers.implementation.InMemoryTaskManager;
+import managers.Managers;
 import data.Epic;
 import data.SubTask;
 import data.Task;

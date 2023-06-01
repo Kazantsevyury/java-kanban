@@ -1,11 +1,12 @@
-package manag;
+package managers.implementation;
 
-import interfaces.HistoryManager;
 import data.Task;
 import data.SubTask;
 import data.Epic;
 import enums.Status;
-import interfaces.TaskManager;
+import managers.HistoryManager;
+import managers.Managers;
+import managers.TaskManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;

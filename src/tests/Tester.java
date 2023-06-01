@@ -3,7 +3,7 @@ package tests;
 import data.Epic;
 import enums.Field;
 import utilities.FieldModifier;
-import manag.InMemoryTaskManager;
+import managers.implementation.InMemoryTaskManager;
 import enums.Status;
 import data.Task;
 import data.SubTask;

@@ -1,14 +1,13 @@
-package manag;
+package managers.implementation;
 
 import data.Task;
-import interfaces.HistoryManager;
+import managers.HistoryManager;
 
 import java.util.LinkedList;
 
 public class InMemoryHistoryManager implements HistoryManager {
     private LinkedList history;
-    private int MAX_SIZE  ;
-
+    private int MAX_SIZE;
 
     public InMemoryHistoryManager() {
         history = new LinkedList();
@@ -25,5 +24,4 @@ public class InMemoryHistoryManager implements HistoryManager {
     public LinkedList getHistory() {
         return history;
     }
-
 }
