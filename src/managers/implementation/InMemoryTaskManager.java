@@ -7,7 +7,6 @@ import enums.Status;
 import managers.HistoryManager;
 import managers.Managers;
 import managers.TaskManager;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -18,7 +17,6 @@ public class InMemoryTaskManager implements TaskManager {
     private HashMap<Integer, Epic> epics;
 
     public InMemoryTaskManager() {
-
         historyManager = Managers.getDefaultHistory();
         tasks = new HashMap<>();
         subTasks = new HashMap<>();
@@ -121,7 +119,6 @@ public class InMemoryTaskManager implements TaskManager {
                 subTaskIdsToRemove.add(subTask.getTaskId());
             }
         }
-        // Удаляем найденные подзадачи из subTasks
         for (int subTaskId : subTaskIdsToRemove) {
             subTasks.remove(subTaskId);
         }
