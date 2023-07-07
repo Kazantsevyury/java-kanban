@@ -1,57 +1,16 @@
 package managers.implementation;
+
 import data.Task;
 import managers.HistoryManager;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class InMemoryHistoryManager implements HistoryManager {
 
-    private CustomLinkedList history;
-    private HashMap<Integer, CustomLinkedList.Node> nodeMap;
-    private final int MAX_SIZE;
-
-    public InMemoryHistoryManager() {
-        history = new CustomLinkedList();
-        nodeMap = new HashMap<>();
-        MAX_SIZE = 10;
-    }
-
-    @Override
-    public void add(Task task) {
-        int taskId = task.getTaskId();
-        CustomLinkedList.Node existingNode = nodeMap.get(taskId);
-
-        if (existingNode != null) {
-            history.removeNode(existingNode);
-        }
-
-        CustomLinkedList.Node newNode = history.linkLast(task);
-        nodeMap.put(taskId, newNode);
-
-        if (history.size() > MAX_SIZE) {
-            CustomLinkedList.Node firstNode = history.getFirst();
-            history.removeNode(firstNode);
-            nodeMap.remove(firstNode.task.getTaskId());
-        }
-    }
-
-    @Override
-    public ArrayList<Task> getHistory() {
-        return history.getTasks();
-    }
-
-    @Override
-    public void remove(int id) {
-        CustomLinkedList.Node nodeToRemove = nodeMap.get(id);
-        if (nodeToRemove != null) {
-            history.removeNode(nodeToRemove);
-            nodeMap.remove(id);
-        }
-    }
-}
-
-class CustomLinkedList {
     private Node first;
     private Node last;
+    private HashMap<Integer, Node> nodeMap;
+    private final int MAX_SIZE;
 
     static class Node {
         Task task;
@@ -63,11 +22,53 @@ class CustomLinkedList {
         }
     }
 
-    public Node getFirst() {
-        return first;
+    public InMemoryHistoryManager() {
+        first = null;
+        last = null;
+        nodeMap = new HashMap<>();
+        MAX_SIZE = 10;
     }
 
-    public Node linkLast(Task task) {
+    @Override
+    public void add(Task task) {
+        int taskId = task.getTaskId();
+        Node existingNode = nodeMap.get(taskId);
+
+        if (existingNode != null) {
+            removeNode(existingNode);
+        }
+
+        Node newNode = linkLast(task);
+        nodeMap.put(taskId, newNode);
+
+        if (size() > MAX_SIZE) {
+            Node firstNode = first;
+            removeNode(firstNode);
+            nodeMap.remove(firstNode.task.getTaskId());
+        }
+    }
+
+    @Override
+    public ArrayList<Task> getHistory() {
+        ArrayList<Task> tasks = new ArrayList<>();
+        Node current = first;
+        while (current != null) {
+            tasks.add(current.task);
+            current = current.next;
+        }
+        return tasks;
+    }
+
+    @Override
+    public void remove(int id) {
+        Node nodeToRemove = nodeMap.get(id);
+        if (nodeToRemove != null) {
+            removeNode(nodeToRemove);
+            nodeMap.remove(id);
+        }
+    }
+
+    private Node linkLast(Task task) {
         final Node newNode = new Node(task);
         final Node lastNode = last;
         newNode.prev = lastNode;
@@ -79,7 +80,7 @@ class CustomLinkedList {
         return newNode;
     }
 
-    public void removeNode(Node node) {
+    private void removeNode(Node node) {
         final Node prevNode = node.prev;
         final Node nextNode = node.next;
 
@@ -98,17 +99,7 @@ class CustomLinkedList {
         }
     }
 
-    public ArrayList<Task> getTasks() {
-        ArrayList<Task> tasks = new ArrayList<>();
-        Node current = first;
-        while (current != null) {
-            tasks.add(current.task);
-            current = current.next;
-        }
-        return tasks;
-    }
-
-    public int size() {
+    private int size() {
         int count = 0;
         Node current = first;
         while (current != null) {
