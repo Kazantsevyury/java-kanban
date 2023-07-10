@@ -6,11 +6,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class InMemoryHistoryManager implements HistoryManager {
-
     private Node first;
     private Node last;
     private HashMap<Integer, Node> nodeMap;
-    private final int MAX_SIZE;
 
     static class Node {
         Task task;
@@ -26,7 +24,6 @@ public class InMemoryHistoryManager implements HistoryManager {
         first = null;
         last = null;
         nodeMap = new HashMap<>();
-        MAX_SIZE = 10;
     }
 
     @Override
@@ -40,12 +37,6 @@ public class InMemoryHistoryManager implements HistoryManager {
 
         Node newNode = linkLast(task);
         nodeMap.put(taskId, newNode);
-
-        if (size() > MAX_SIZE) {
-            Node firstNode = first;
-            removeNode(firstNode);
-            nodeMap.remove(firstNode.task.getTaskId());
-        }
     }
 
     @Override
