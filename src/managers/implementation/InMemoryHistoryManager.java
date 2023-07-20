@@ -28,6 +28,7 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     @Override
     public void add(Task task) {
+
         int taskId = task.getTaskId();
         Node existingNode = nodeMap.get(taskId);
 
@@ -48,6 +49,20 @@ public class InMemoryHistoryManager implements HistoryManager {
             current = current.next;
         }
         return tasks;
+    }
+    @Override
+    public void printer() {
+        ArrayList<Task> tasks = getHistory();
+
+        if (tasks.isEmpty()) {
+            System.out.println("История задач пуста.");
+            return;
+        }
+
+        System.out.println("История задач:");
+        for (Task task : tasks) {
+            System.out.println(task.toString());
+        }
     }
 
     @Override

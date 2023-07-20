@@ -26,6 +26,27 @@ public class InMemoryTaskManager implements TaskManager {
     public HistoryManager getHistoryManager() {
         return historyManager;
     }
+    public Task getTaskById(int taskId) {
+        Task task = tasks.get(taskId);
+        if (task != null) {
+            historyManager.add(task);
+            return task;
+        }
+
+        task = subTasks.get(taskId);
+        if (task != null) {
+            historyManager.add(task);
+            return task;
+        }
+
+        task = epics.get(taskId);
+        if (task != null) {
+            historyManager.add(task);
+            return task;
+        }
+
+        return null; // Если задачи с таким ID не существует, возвращаем null
+    }
 
     @Override
     public void addTask(Task task) {
@@ -35,7 +56,7 @@ public class InMemoryTaskManager implements TaskManager {
     public void addSubTask(SubTask subTask) {
         subTasks.put(subTask.getTaskId(), subTask);
 
-        int parentEpicID = subTask.getEpicId();
+        int parentEpicID = subTask.getParentEpicId();
         Epic parentEpic = epics.get(parentEpicID);
         if (parentEpic != null) {
             ArrayList<Integer> parentEpicArrayList = parentEpic.getSubTasks();
@@ -115,7 +136,7 @@ public class InMemoryTaskManager implements TaskManager {
 
         // Находим все подзадачи с заданным epicId и добавляем их ID в список subTaskIdsToRemove
         for (SubTask subTask : subTasks.values()) {
-            if (subTask.getEpicId() == epicId) {
+            if (subTask.getParentEpicId() == epicId) {
                 subTaskIdsToRemove.add(subTask.getTaskId());
             }
         }
@@ -166,4 +187,5 @@ public class InMemoryTaskManager implements TaskManager {
             }
         }
     }
+
 }
