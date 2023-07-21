@@ -5,32 +5,24 @@ import data.SubTask;
 import data.Task;
 import enums.Status;
 import enums.TaskTypes;
-import managers.HistoryManager;
+import exceptions.ManagerSaveException;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.List;
 
 public class FileBackedTasksManager extends InMemoryTaskManager {
 
-    /*
-
-    Я не могу найти ошибку. По какой то причине, история обрабатывается неправильно. Она успешно считывается из файла,
-    но я не могу ее записать. Притом что если ее печатать- то все отображается корректно.
-
-     */
+    File csvFile = new File(CSV_FILE_PATH);
 
     private static final String CSV_FILE_PATH = "example.csv";
     public FileBackedTasksManager() {
         super();
-        loadTasksFromCsv();
+        loadTasksFromCsv(csvFile);
     }
-    public void loadTasksFromCsv() {
-        File csvFile = new File(CSV_FILE_PATH);
+    public void loadTasksFromCsv(File file) {
         if (csvFile.exists() && csvFile.length() > 1) {
             try {
                 BufferedReader reader = new BufferedReader(new FileReader(CSV_FILE_PATH));
-                List<String> additionalInfo = new ArrayList<>();
                 String line;
                 boolean isHistorySection = false;
                 boolean firstLineSkipped = false;
@@ -93,7 +85,11 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
             }
         }
     }
-
+    public static FileBackedTasksManager loadFromFile(File file) {
+        FileBackedTasksManager manager = new FileBackedTasksManager();
+        manager.loadTasksFromCsv(file);
+        return manager;
+    }
     public void saveTasksToCsv() {
         try {
             FileWriter writer = new FileWriter(CSV_FILE_PATH);
@@ -117,15 +113,20 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
 
             bufferedWriter.newLine();
 
+            boolean isFirstHistoryTask = true;
             for (Task history : super.getHistoryManager().getHistory()) {
+                if (isFirstHistoryTask) {
+                    isFirstHistoryTask = false;
+                } else {
+                    bufferedWriter.write(",");
+                }
                 bufferedWriter.write(Integer.toString(history.getTaskId()));
-                bufferedWriter.newLine();
             }
 
             bufferedWriter.close();
 
         } catch (IOException e) {
-            System.out.println("Error creating CSV file:" + e.getMessage());
+            throw new ManagerSaveException("Ошибка при сохранении задач в CSV файл: " + e.getMessage());
         }
     }
 

@@ -6,6 +6,4 @@ public enum Field {
     STATUS,
     PARENTEPICID,
     SUBTASKS
-
-
 }

@@ -1,20 +1,22 @@
 package controller;
 
-import managers.implementation.InMemoryTaskManager;
+import managers.Managers;
+import managers.implementation.FileBackedTasksManager;
 import utilities.FieldModifier;
 import tests.Tester;
 
 public class AppController {
-    private InMemoryTaskManager inMemoryTaskManager;
+    private FileBackedTasksManager manager;
     private FieldModifier fieldModifier;
     private Tester tester;
 
     public AppController() {
-        inMemoryTaskManager = new InMemoryTaskManager();
-        fieldModifier = new FieldModifier(inMemoryTaskManager);
+        manager  = Managers.getFileBackendTaskManager();
+        fieldModifier = new FieldModifier(manager);
         tester = new Tester();
     }
     public void run() {
-        tester.runTests(inMemoryTaskManager,fieldModifier);
+        tester.runTests(manager,fieldModifier);
+
     }
 }

@@ -28,7 +28,6 @@ public class FieldModifier {
                     existingTask.setStatus((Status) value);
                     break;
                 default:
-                    // Если поле не совпадает ни с одним из ожидаемых значений, ничего не делаем
                     return null;
             }
             inMemoryTaskManager.removeTask(taskId);
