@@ -14,7 +14,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
 
     File csvFile = new File(CSV_FILE_PATH);
 
-    private static final String CSV_FILE_PATH = "example.csv";
+    private static final String CSV_FILE_PATH = "C:\\Users\\Юра\\dev\\java-kanban\\src\\resources\\example.csv";
     public FileBackedTasksManager() {
         super();
         loadTasksFromCsv(csvFile);
