@@ -6,11 +6,10 @@ import data.Task;
 
 import java.util.ArrayList;
 
-
 public interface TaskManager {
-    void addTask(Task task);
-    void addSubTask(SubTask subTask);
-    void addEpic(Epic epic);
+    void addTask(Task task) ;
+    void addSubTask(SubTask subTask) ;
+    void addEpic(Epic epic) ;
 
     Task getTask(int taskId);
     SubTask getSubTask(int subTaskId);
@@ -29,5 +28,4 @@ public interface TaskManager {
     void removeSubTask(int subTaskId);
 
     void updateEpicStatus();
-
 }

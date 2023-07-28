@@ -6,9 +6,11 @@ import data.Task;
 import enums.Status;
 import enums.TaskTypes;
 import exceptions.ManagerSaveException;
+import utilities.IdGenerator;
 
 import java.io.*;
-import java.util.ArrayList;
+import java.time.LocalDate;
+import java.util.*;
 
 public class FileBackedTasksManager extends InMemoryTaskManager {
 
@@ -20,9 +22,11 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         loadTasksFromCsv(csvFile);
     }
     public void loadTasksFromCsv(File file) {
+        loadIdsToGenerator();
         if (csvFile.exists() && csvFile.length() > 1) {
             try {
                 BufferedReader reader = new BufferedReader(new FileReader(CSV_FILE_PATH));
+
                 String line;
                 boolean isHistorySection = false;
                 boolean firstLineSkipped = false;
@@ -44,24 +48,38 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
                         String title = values[1];
                         String description = values[2];
                         Status status = Status.valueOf(values[3]);
-                        TaskTypes type = TaskTypes.valueOf(values[4]);
+                        LocalDate startTime;
+                        if (values[4]!= null) {
+                             startTime = LocalDate.parse(values[4]);
+                        }
+                        else {
+                             startTime = null ;
+                        }
+                        int duration;
+                        if (values[5]!= null) {
+                             duration = Integer.parseInt(values[5]);
+                        }
+                        else {
+                             duration = 0 ;
+                        }
+                        TaskTypes type = TaskTypes.valueOf(values[6]);
 
                         switch (type) {
                             case TASK:
-                                Task task = new Task(taskId, title, description, status);
+                                Task task = new Task(taskId, title, description, status, duration, startTime);
                                 addTask(task);
                                 break;
                             case EPIC:
                                 ArrayList<Integer> epicSubTasks = new ArrayList<>();
-                                for (int i = 5; i < values.length; i++) {
+                                for (int i = 7; i < values.length; i++) {
                                     epicSubTasks.add(Integer.parseInt(values[i]));
                                 }
                                 Epic epic = new Epic(taskId, title, description, status, epicSubTasks);
                                 addEpic(epic);
                                 break;
                             case SUBTASK:
-                                int parentEpicId = Integer.parseInt(values[5]);
-                                SubTask subTask = new SubTask(taskId, title, description, status, parentEpicId);
+                                int parentEpicId = Integer.parseInt(values[7]);
+                                SubTask subTask = new SubTask(taskId,title,description,status,parentEpicId,duration,startTime);
                                 addSubTask(subTask);
                                 break;
                             default:
@@ -85,6 +103,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
             }
         }
     }
+
     public static FileBackedTasksManager loadFromFile(File file) {
         FileBackedTasksManager manager = new FileBackedTasksManager();
         manager.loadTasksFromCsv(file);
@@ -95,19 +114,19 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
             FileWriter writer = new FileWriter(CSV_FILE_PATH);
             BufferedWriter bufferedWriter = new BufferedWriter(writer);
 
-            bufferedWriter.write("id,title,description,status,typ,SUBTASKS/PARENTEPICID");
+            bufferedWriter.write("id,title,description,status,startTime,duration,typ,SUBTASKS/PARENTEPICID");
             bufferedWriter.newLine();
 
-            for (Task tasks : super.getAllTasks()) {
-                bufferedWriter.write(tasks.toCSV());
+            for (Task task : super.getAllTasks()) {
+                bufferedWriter.write(task.toCSV());
                 bufferedWriter.newLine();
             }
-            for (Task tasks : super.getAllEpics()) {
-                bufferedWriter.write(tasks.toCSV());
+            for (Task epic : super.getAllEpics()) {
+                bufferedWriter.write(epic.toCSV());
                 bufferedWriter.newLine();
             }
-            for (Task tasks : super.getAllSubTasks()) {
-                bufferedWriter.write(tasks.toCSV());
+            for (Task subTask : super.getAllSubTasks()) {
+                bufferedWriter.write(subTask.toCSV());
                 bufferedWriter.newLine();
             }
 
@@ -129,10 +148,29 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
             throw new ManagerSaveException("Ошибка при сохранении задач в CSV файл: " + e.getMessage());
         }
     }
+    public void loadIdsToGenerator() {
+            Set<Integer> loadedIds = new HashSet<>();
+
+            for (Task task : super.getAllTasks()) {
+                loadedIds.add(task.getTaskId());
+            }
+
+            for (Task epic : super.getAllEpics()) {
+                loadedIds.add(epic.getTaskId());
+            }
+
+            for (Task subTask : super.getAllSubTasks()) {
+                loadedIds.add(subTask.getTaskId());
+            }
+
+            IdGenerator.loadUsedIds(loadedIds);
+        }
+
+
 
     @Override
     public void addSubTask(SubTask subTask) {
-        super.addSubTask(subTask);
+        super.addTask(subTask);
         saveTasksToCsv();
     }
 

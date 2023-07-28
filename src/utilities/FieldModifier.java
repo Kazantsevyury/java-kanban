@@ -1,9 +1,9 @@
 package utilities;
+
 import data.Epic;
 import managers.implementation.InMemoryTaskManager;
 import enums.Status;
 import enums.Field;
-
 import data.SubTask;
 import data.Task;
 
@@ -51,7 +51,6 @@ public class FieldModifier {
                     existingEpic.setStatus((Status) value);
                     break;
                 default:
-
                     return null;
             }
             inMemoryTaskManager.removeEpic(epicId);
@@ -62,8 +61,7 @@ public class FieldModifier {
         return null;
     }
 
-
-    public SubTask updateSubTask(int subTaskId, Field field, Object value) {
+    public SubTask updateSubTask(int subTaskId, Field field, Object value)  {
         SubTask existingSubTask = inMemoryTaskManager.getSubTask(subTaskId);
         if (existingSubTask != null) {
             switch (field) {
@@ -86,5 +84,4 @@ public class FieldModifier {
         }
         return null;
     }
-
 }

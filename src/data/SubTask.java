@@ -3,17 +3,29 @@ package data;
 import enums.Status;
 import enums.TaskTypes;
 
+import java.time.LocalDate;
+import java.util.Date;
+
 public class SubTask extends Task {
     private int parentEpicId;
     private TaskTypes taskTypes = TaskTypes.SUBTASK;
 
-    public SubTask(String title, String description,int epicID) {
+    public SubTask(String title, String description, int epicID, int duration, LocalDate startTime) {
+        super(title, description, duration, startTime);
+        this.parentEpicId = epicID;
+    }
+    public SubTask(String title, String description, int epicID) {
         super(title, description);
-        this.parentEpicId = epicID  ;
+        this.parentEpicId = epicID;
     }
 
-    public SubTask(int taskId, String title, String description, Status status, int parentEpicId) {
-        super(taskId, title, description, status);
+    public SubTask(int taskId, String title, String description, Status status, int parentEpicId, int duration, LocalDate startTime) {
+        super(taskId, title, description, status, duration, startTime);
+        this.parentEpicId = parentEpicId;
+    }
+
+    public SubTask(String title, String description, Status status, int parentEpicId, int duration, LocalDate startTime) {
+        super(title, description, status,duration, startTime );
         this.parentEpicId = parentEpicId;
     }
 
@@ -27,21 +39,22 @@ public class SubTask extends Task {
 
     @Override
     public String toString() {
-        return  "SubTask ID: " + getTaskId()  + "\nTitle: " +  getTitle() + "\nDescription: " + getDescription() + "\nStatus: " + getStatus() + "\nParentEpicID" + parentEpicId;
-
+        return "SubTask ID: " + getTaskId() + "\nTitle: " + getTitle() + "\nDescription: " + getDescription()
+                + "\nStatus: " + getStatus() + "\nParentEpicID: " + getParentEpicId()
+                + "\nDuration: " + getDuration() + " minutes" + "\nStart Time: " + getStartTime();
     }
+
     @Override
-    public String toCSV(){
-        StringBuffer sb = new StringBuffer();
-        sb.append(super.toCSV()); // Вызываем родительский метод toCSV() и добавляем его результат в StringBuffer
+    public String toCSV() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(super.toCSV());
         sb.append(",");
-        sb.append(parentEpicId);
-
+        sb.append(getParentEpicId());
         return sb.toString();
-
     }
     @Override
     public TaskTypes getTaskTypes() {
         return taskTypes;
     }
+
 }
