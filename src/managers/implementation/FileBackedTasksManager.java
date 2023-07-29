@@ -13,16 +13,16 @@ import java.time.LocalDate;
 import java.util.*;
 
 public class FileBackedTasksManager extends InMemoryTaskManager {
+    private static final String CSV_FILE_PATH = "src/resources/example.csv";
 
     File csvFile = new File(CSV_FILE_PATH);
 
-    private static final String CSV_FILE_PATH = "C:\\Users\\Юра\\dev\\java-kanban\\src\\resources\\example.csv";
     public FileBackedTasksManager() {
         super();
         loadTasksFromCsv(csvFile);
     }
     public void loadTasksFromCsv(File file) {
-        loadIdsToGenerator();
+
         if (csvFile.exists() && csvFile.length() > 1) {
             try {
                 BufferedReader reader = new BufferedReader(new FileReader(CSV_FILE_PATH));
@@ -38,7 +38,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
                     }
                     if (line.isEmpty()) {
                         isHistorySection = true;
-                        continue;
+                        //continue;
                     }
 
                     if (!isHistorySection) {
@@ -91,13 +91,14 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
                             String[] historyTaskIds = line.split(",");
                             for (String taskId : historyTaskIds) {
                                 int taskIdInt = Integer.parseInt(taskId.trim());
-                                getHistoryManager().add(super.getTaskById(taskIdInt));
+                                getHistoryManager().add(super.getAnyTaskById(taskIdInt));
                             }
                         }
                     }
                 }
 
                 reader.close();
+
             } catch (IOException e) {
                 System.out.println("Ошибка при загрузке задач из CSV файла: " + e.getMessage());
             }

@@ -27,5 +27,11 @@ public interface TaskManager {
     void removeEpic(int epicId);
     void removeSubTask(int subTaskId);
 
+    HistoryManager getHistoryManager();
+
+    default Task getAnyTaskById(int taskId) {
+        return null;
+    }
+
     void updateEpicStatus();
 }

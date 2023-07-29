@@ -23,6 +23,11 @@ public class SubTask extends Task {
         super(taskId, title, description, status, duration, startTime);
         this.parentEpicId = parentEpicId;
     }
+    public SubTask (String title, String description, int parentEpicId,int duration,String dateAsString ){
+        super(title,description,duration,dateAsString);
+        this.parentEpicId = parentEpicId;
+    }
+
 
     public SubTask(String title, String description, Status status, int parentEpicId, int duration, LocalDate startTime) {
         super(title, description, status,duration, startTime );

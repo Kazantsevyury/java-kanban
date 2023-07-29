@@ -1,14 +1,5 @@
 id,title,description,status,startTime,duration,typ,SUBTASKS/PARENTEPICID
-497254931,Name,description,NEW,2023-07-28,240,TASK
 380945748,Name,description,NEW,2023-07-28,240,TASK
-368457654,Name,description,NEW,2023-07-28,240,TASK
-2,Задача 2,Описание задачи 2,NEW,2023-07-28,180,TASK
-3,Задача 3,Описание задачи 3,IN_PROGRESS,2023-07-29,120,TASK
-4,Подзадача 1,Описание подзадачи 1,NEW,2023-07-31,60,SUBTASK,1
-5,Задача 5,Описание задачи 5,NEW,2023-07-28,180,TASK
-403741493,Name,description,NEW,2023-07-28,240,TASK
-7,Подзадача 3,Описание подзадачи 3,NEW,2023-08-04,120,SUBTASK,2
-8,Подзадача 4,Описание подзадачи 4,IN_PROGRESS,2023-08-05,90,SUBTASK,2
-9,Подзадача 5,Описание подзадачи 5,DONE,2023-08-06,60,SUBTASK,2
+808384695,Name,description,DONE,2023-07-29,240,EPIC
 
-2,5,9
+808384695

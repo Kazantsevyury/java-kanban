@@ -3,7 +3,7 @@ package controller;
 import managers.Managers;
 import managers.implementation.FileBackedTasksManager;
 import utilities.FieldModifier;
-import tests.Tester;
+import tester.Tester;
 import utilities.IdGenerator;
 
 public class AppController {

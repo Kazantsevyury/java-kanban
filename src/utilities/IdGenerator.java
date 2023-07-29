@@ -14,8 +14,6 @@ public class IdGenerator {
             newId = generateUniqueId();
         } while (isUniqueId(newId));
 
-
-
         return newId;
     }
 

@@ -26,6 +26,14 @@ public class Task {
         this.duration = 240;
         this.startTime = LocalDate.now();
     }
+    public Task(String title, String description,int duration,String dateAsString ) {
+        this.taskId = IdGenerator.getNextId();
+        this.title = title;
+        this.description = description;
+        this.status = Status.NEW;
+        this.duration = duration;
+        this.startTime = LocalDate.parse(dateAsString);
+    }
     public Task(String title, String description, Status status, int duration, LocalDate startTime ) {
         this.taskId = IdGenerator.getNextId();
         this.title = title;
@@ -61,7 +69,15 @@ public class Task {
         this.duration = duration;
         this.startTime = startTime;
     }
-
+    public Task(String title, String description, Status status, TaskTypes taskTypes, int duration,String dateAsString) {
+        this.taskId = IdGenerator.getNextId();
+        this.title = title;
+        this.description = description;
+        this.status = status;
+        this.taskTypes = taskTypes;
+        this.duration = duration;
+        this.startTime = LocalDate.parse(dateAsString);
+    }
 
 
     public int getTaskId() {
@@ -89,6 +105,10 @@ public class Task {
     public void setStartTime(LocalDate startTime) {
         this.startTime = startTime;
     }
+    public void setStartTime(String dateAsString) {
+        this.startTime = LocalDate.parse(dateAsString);
+    }
+
 
 
     public void setTitle(String title) {
