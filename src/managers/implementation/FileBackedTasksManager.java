@@ -13,20 +13,18 @@ import java.time.LocalDate;
 import java.util.*;
 
 public class FileBackedTasksManager extends InMemoryTaskManager {
-    private static final String CSV_FILE_PATH = "src/resources/example.csv";
-
-    File csvFile = new File(CSV_FILE_PATH);
-
-    public FileBackedTasksManager() {
+    String CSV_FILE_PATH;
+    File csvFile ;
+    public FileBackedTasksManager(String CSV_FILE_PATH) {
         super();
+        this.CSV_FILE_PATH = CSV_FILE_PATH;
+        this.csvFile = new File(CSV_FILE_PATH);
         loadTasksFromCsv(csvFile);
+
     }
     public void loadTasksFromCsv(File file) {
-
         if (csvFile.exists() && csvFile.length() > 1) {
-            try {
-                BufferedReader reader = new BufferedReader(new FileReader(CSV_FILE_PATH));
-
+            try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
                 String line;
                 boolean isHistorySection = false;
                 boolean firstLineSkipped = false;
@@ -38,66 +36,15 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
                     }
                     if (line.isEmpty()) {
                         isHistorySection = true;
-                        //continue;
                     }
 
                     if (!isHistorySection) {
-                        String[] values = line.split(",");
-
-                        int taskId = Integer.parseInt(values[0]);
-                        String title = values[1];
-                        String description = values[2];
-                        Status status = Status.valueOf(values[3]);
-                        LocalDate startTime;
-                        if (values[4]!= null) {
-                             startTime = LocalDate.parse(values[4]);
-                        }
-                        else {
-                             startTime = null ;
-                        }
-                        int duration;
-                        if (values[5]!= null) {
-                             duration = Integer.parseInt(values[5]);
-                        }
-                        else {
-                             duration = 0 ;
-                        }
-                        TaskTypes type = TaskTypes.valueOf(values[6]);
-
-                        switch (type) {
-                            case TASK:
-                                Task task = new Task(taskId, title, description, status, duration, startTime);
-                                addTask(task);
-                                break;
-                            case EPIC:
-                                ArrayList<Integer> epicSubTasks = new ArrayList<>();
-                                for (int i = 7; i < values.length; i++) {
-                                    epicSubTasks.add(Integer.parseInt(values[i]));
-                                }
-                                Epic epic = new Epic(taskId, title, description, status, epicSubTasks);
-                                addEpic(epic);
-                                break;
-                            case SUBTASK:
-                                int parentEpicId = Integer.parseInt(values[7]);
-                                SubTask subTask = new SubTask(taskId,title,description,status,parentEpicId,duration,startTime);
-                                addSubTask(subTask);
-                                break;
-                            default:
-                                System.out.println("Неизвестный тип задачи: " + type);
-                                break;
-                        }
+                        parseTasks(line);
                     } else {
-                        if (!line.isEmpty()) {
-                            String[] historyTaskIds = line.split(",");
-                            for (String taskId : historyTaskIds) {
-                                int taskIdInt = Integer.parseInt(taskId.trim());
-                                getHistoryManager().add(super.getAnyTaskById(taskIdInt));
-                            }
-                        }
+                        parseHistory(line);
                     }
                 }
-
-                reader.close();
+                loadIdsToGenerator();
 
             } catch (IOException e) {
                 System.out.println("Ошибка при загрузке задач из CSV файла: " + e.getMessage());
@@ -105,11 +52,86 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         }
     }
 
-    public static FileBackedTasksManager loadFromFile(File file) {
-        FileBackedTasksManager manager = new FileBackedTasksManager();
-        manager.loadTasksFromCsv(file);
-        return manager;
+    private void parseTasks(String line) {
+        String[] values = line.split(",");
+
+        int taskId = Integer.parseInt(values[0]);
+        String title = values[1];
+        String description = values[2];
+        Status status = Status.valueOf(values[3]);
+        LocalDate startTime = parseLocalDate(values[4]);
+        int duration = Integer.parseInt(values[5]);
+        TaskTypes type = TaskTypes.valueOf(values[6]);
+
+        switch (type) {
+            case TASK:
+                Task task = new Task(taskId, title, description, status, duration, startTime);
+
+                super.addTask(task);
+                break;
+            case EPIC:
+                parseEpic(values, taskId, title, description, status, duration, startTime);
+                break;
+            case SUBTASK:
+                int parentEpicId = Integer.parseInt(values[7]);
+                SubTask subTask = new SubTask(taskId, title, description, status, parentEpicId, duration, startTime);
+                super.addSubTask(subTask);
+                break;
+            default:
+                System.out.println("Неизвестный тип задачи: " + type);
+                break;
+        }
     }
+
+    private void parseEpic(String[] values, int taskId, String title, String description, Status status, int duration, LocalDate startTime) {
+        Epic epic;
+
+        if (values[7].equals("null")) {
+            epic = new Epic(taskId, title, description, status, duration, startTime);
+        } else {
+            ArrayList<Integer> epicSubTasks = new ArrayList<>();
+            for (int i = 7; i < values.length; i++) {
+                epicSubTasks.add(Integer.parseInt(values[i]));
+            }
+            epic = new Epic(taskId, title, description, status, epicSubTasks);
+        }
+
+        super.addEpic(epic);
+    }
+
+    private void parseHistory(String line) {
+        if (!line.isEmpty()) {
+            if (line.contains(",")) {
+                String[] historyTaskIds = line.split(",");
+                for (String taskId : historyTaskIds) {
+                    int taskIdInt = Integer.parseInt(taskId.trim());
+                    Task task = super.getAnyTaskById(taskIdInt);
+                    if (task != null) {
+                        super.getHistoryManager().add(task);
+                    } else {
+                        System.out.println("Задачи с идентификатором " + taskIdInt + " не существует.");
+                    }
+                }
+            } else {
+                int taskIdInt = Integer.parseInt(line.trim());
+                Task task = super.getAnyTaskById(taskIdInt);
+                if (task != null) {
+                    super.getHistoryManager().add(task);
+                } else {
+                    System.out.println("Задачи с идентификатором " + taskIdInt + " не существует.");
+                }
+            }
+        }
+    }
+
+
+    private LocalDate parseLocalDate(String value) {
+        if (value != null) {
+            return LocalDate.parse(value);
+        }
+        return null;
+    }
+
     public void saveTasksToCsv() {
         try {
             FileWriter writer = new FileWriter(CSV_FILE_PATH);
@@ -163,15 +185,12 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
             for (Task subTask : super.getAllSubTasks()) {
                 loadedIds.add(subTask.getTaskId());
             }
-
             IdGenerator.loadUsedIds(loadedIds);
         }
 
-
-
     @Override
     public void addSubTask(SubTask subTask) {
-        super.addTask(subTask);
+        super.addSubTask(subTask);
         saveTasksToCsv();
     }
 
@@ -203,5 +222,20 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     public void removeEpic(int epicId) {
         super.removeEpic(epicId);
         saveTasksToCsv();
+    }
+    public void clearCsvFileExample() {
+            String filePath = "test_empty_task_list.csv";
+
+            try {
+                FileWriter fileWriter = new FileWriter(filePath, false);
+
+                fileWriter.write("");
+
+                fileWriter.close();
+
+                System.out.println("Содержимое файла успешно очищено.");
+            } catch (IOException e) {
+                System.out.println("Ошибка при очистке файла: " + e.getMessage());
+            }
     }
 }

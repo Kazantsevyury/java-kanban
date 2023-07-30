@@ -6,11 +6,15 @@ import enums.TaskTypes;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class Epic extends Task {
     private ArrayList<Integer> subTasks;
     private LocalDateTime endTime;
+
+    public Epic(int taskId, String title, String description, Status status, int duration, LocalDate startTime) {
+        super(taskId,title,description,status,duration,startTime);
+        this.subTasks = new ArrayList<Integer>();
+    }
 
     @Override
     public LocalDateTime getEndTime() {
@@ -33,11 +37,11 @@ public class Epic extends Task {
     }
 
     public Epic(int taskId, String title, String description, Status status, ArrayList<Integer> subTasks) {
-        super(taskId, title, description, status, 0, null);
+        super(taskId, title, description, status);
         this.subTasks = subTasks;
     }
 
-    public Epic(String title, String description, ArrayList<Integer> subTasks, LocalDateTime endTime, TaskTypes taskTypes,LocalDate startTime, int duration) {
+    public Epic(String title, String description, ArrayList<Integer> subTasks, LocalDateTime endTime, TaskTypes taskTypes, LocalDate startTime, int duration) {
         super(title, description,duration, startTime);
         this.subTasks = subTasks;
         this.taskTypes = taskTypes;
@@ -82,12 +86,18 @@ public class Epic extends Task {
     public String toCSV() {
         StringBuilder sb = new StringBuilder();
         sb.append(super.toCSV());
+        String delimiter = ",";
+
         if (!subTasks.isEmpty()) {
-            String delimiter = ",";
             for (int i = 0; i < subTasks.size(); i++) {
                 sb.append(delimiter);
                 sb.append(subTasks.get(i).toString());
             }
+        }
+        else {
+            sb.append(delimiter);
+            sb.append("null");
+
         }
 
         return sb.toString();

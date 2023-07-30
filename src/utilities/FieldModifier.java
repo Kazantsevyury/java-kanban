@@ -1,6 +1,7 @@
 package utilities;
 
 import data.Epic;
+import managers.implementation.FileBackedTasksManager;
 import managers.implementation.InMemoryTaskManager;
 import enums.Status;
 import enums.Field;
@@ -12,6 +13,9 @@ public class FieldModifier {
 
     public FieldModifier(InMemoryTaskManager inMemoryTaskManager) {
         this.inMemoryTaskManager = inMemoryTaskManager;
+    }
+    public FieldModifier(FileBackedTasksManager fileBackedTasksManager) {
+        this.inMemoryTaskManager = fileBackedTasksManager;
     }
 
     public Task updateTask(int taskId, Field field, Object value) {

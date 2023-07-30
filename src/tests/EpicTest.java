@@ -15,7 +15,6 @@ class EpicTest {
 
     @Test
     void testEpicConstructorAndGetters() {
-        // Test the constructors and getters of the Epic class
         String title = "Epic Sample";
         String description = "This is an epic sample for testing.";
         int duration = 240;
@@ -42,7 +41,6 @@ class EpicTest {
 
     @Test
     void testSetEndTime() {
-        // Test the setEndTime method
         Epic epic = new Epic("Epic Sample", "Description", 240, LocalDate.of(2023, 7, 28), new ArrayList<>(), null, TaskTypes.EPIC);
 
         LocalDateTime newEndTime = LocalDateTime.of(2023, 7, 30, 16, 30);
@@ -53,7 +51,6 @@ class EpicTest {
 
     @Test
     void testToString() {
-        // Test the toString method
         ArrayList<Integer> subTasks = new ArrayList<>();
         subTasks.add(1);
         subTasks.add(2);
@@ -66,7 +63,6 @@ class EpicTest {
 
     @Test
     void testToCSV() {
-        // Test the toCSV method
         ArrayList<Integer> subTasks = new ArrayList<>();
         subTasks.add(1);
         subTasks.add(2);
@@ -78,7 +74,6 @@ class EpicTest {
 
     @Test
     void testGetTaskTypes() {
-        // Test the getTaskTypes method
         Epic epic = new Epic("Epic Sample", "Description", 240, LocalDate.of(2023, 7, 28), new ArrayList<>(), null, TaskTypes.EPIC);
 
         assertEquals(TaskTypes.EPIC, epic.getTaskTypes());
@@ -86,7 +81,6 @@ class EpicTest {
 
     @Test
     void testSetSubTasks() {
-        // Test the setSubTasks method
         Epic epic = new Epic("Epic Sample", "Description", 240, LocalDate.of(2023, 7, 28), new ArrayList<>(), null, TaskTypes.EPIC);
 
         ArrayList<Integer> newSubTasks = new ArrayList<>();
@@ -99,7 +93,6 @@ class EpicTest {
 
     @Test
     void testGetSubTasks() {
-        // Test the getSubTasks method
         ArrayList<Integer> subTasks = new ArrayList<>();
         subTasks.add(1);
         subTasks.add(2);

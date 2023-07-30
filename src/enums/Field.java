@@ -9,6 +9,5 @@ public enum Field {
     PARENTEPICID,
     SUBTASKS,
     STARTTIME,
-
     DURATION
 }

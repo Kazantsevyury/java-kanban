@@ -3,6 +3,8 @@ package managers;
 import data.Epic;
 import data.SubTask;
 import data.Task;
+import managers.implementation.FileBackedTasksManager;
+import utilities.FieldModifier;
 
 import java.util.ArrayList;
 
@@ -16,8 +18,9 @@ public interface TaskManager {
     Epic getEpic(int epicId);
 
     ArrayList<Task> getAllTasks();
-    ArrayList<Task> getAllEpics();
-    ArrayList<Task> getAllSubTasks();
+    ArrayList<Epic> getAllEpics();
+    ArrayList<SubTask> getAllSubTasks();
+
 
     void clearAllTasks();
     void clearAllEpics();
@@ -28,10 +31,9 @@ public interface TaskManager {
     void removeSubTask(int subTaskId);
 
     HistoryManager getHistoryManager();
+    FieldModifier getFieldModifier();
 
-    default Task getAnyTaskById(int taskId) {
-        return null;
-    }
+     Task getAnyTaskById(int taskId);
 
     void updateEpicStatus();
 }

@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import data.Task;
 import enums.Status;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -44,6 +46,50 @@ class InMemoryHistoryManagerTest {
         assertEquals(1, history.size());
     }
 
+    @Test
+    void testRemoveNonExistingTask() {
+        Task task1 = new Task("Задача 1", "Описание задачи 1");
+
+        historyManager.add(task1);
+        int initialSize = historyManager.getHistory().size();
+
+        historyManager.remove(-1);
+
+        ArrayList<Task> history = historyManager.getHistory();
+        assertEquals(initialSize, history.size());
+    }
+    @Test
+    void testPrinterWithTasks() {
+        Task task1 = new Task("Задача 1", "Описание задачи 1");
+        Task task2 = new Task("Задача 2", "Описание задачи 2");
+
+        historyManager.add(task1);
+        historyManager.add(task2);
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        PrintStream originalOut = System.out;
+        System.setOut(new PrintStream(outputStream));
+
+        historyManager.printer();
+        System.setOut(originalOut);
+
+        String printedOutput = outputStream.toString();
+        assertTrue(printedOutput.contains(task1.toString()));
+        assertTrue(printedOutput.contains(task2.toString()));
+    }
+    @Test
+    void testRemoveExistingTask() {
+        Task task1 = new Task("Задача 1", "Описание задачи 1");
+
+        historyManager.add(task1);
+        int initialSize = historyManager.getHistory().size();
+
+        historyManager.remove(task1.getTaskId());
+
+        ArrayList<Task> history = historyManager.getHistory();
+        assertEquals(initialSize - 1, history.size());
+        assertFalse(history.contains(task1));
+    }
     @Test
     void testRemoveFromHistory() {
         Task task1 = new Task("Задача 1", "Описание задачи 1");

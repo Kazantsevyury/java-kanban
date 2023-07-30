@@ -26,7 +26,21 @@ public class Task {
         this.duration = 240;
         this.startTime = LocalDate.now();
     }
-    public Task(String title, String description,int duration,String dateAsString ) {
+
+    public Task(int taskId, String title, String description) {
+        this.taskId = taskId;
+        this.title = title;
+        this.description = description;
+    }
+
+    public Task(int taskId, String title, String description, Status status) {
+        this.taskId = taskId;
+        this.title = title;
+        this.description = description;
+        this.status = status;
+    }
+
+    public Task(String title, String description, int duration, String dateAsString ) {
         this.taskId = IdGenerator.getNextId();
         this.title = title;
         this.description = description;

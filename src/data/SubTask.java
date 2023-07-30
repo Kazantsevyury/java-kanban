@@ -1,10 +1,7 @@
 package data;
-
 import enums.Status;
 import enums.TaskTypes;
-
 import java.time.LocalDate;
-import java.util.Date;
 
 public class SubTask extends Task {
     private int parentEpicId;
@@ -27,7 +24,6 @@ public class SubTask extends Task {
         super(title,description,duration,dateAsString);
         this.parentEpicId = parentEpicId;
     }
-
 
     public SubTask(String title, String description, Status status, int parentEpicId, int duration, LocalDate startTime) {
         super(title, description, status,duration, startTime );
@@ -61,5 +57,4 @@ public class SubTask extends Task {
     public TaskTypes getTaskTypes() {
         return taskTypes;
     }
-
 }

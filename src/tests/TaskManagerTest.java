@@ -1,10 +1,11 @@
-package managers;
+package tests;
 
+import managers.TaskManager;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class TaskManagerTest {
+abstract class TaskManagerTest<T extends TaskManager> {
 
     @Test
     void addTask() {
