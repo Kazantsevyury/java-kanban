@@ -31,6 +31,10 @@ public class FieldModifier {
                 case STATUS:
                     existingTask.setStatus((Status) value);
                     break;
+                case ID:
+                    existingTask.setTaskId((Integer) value);
+                    break;
+
                 default:
                     return null;
             }
@@ -53,6 +57,9 @@ public class FieldModifier {
                     break;
                 case STATUS:
                     existingEpic.setStatus((Status) value);
+                    break;
+                case ID:
+                    existingEpic.setTaskId((Integer) value);
                     break;
                 default:
                     return null;
@@ -78,6 +85,8 @@ public class FieldModifier {
                 case STATUS:
                     existingSubTask.setStatus((Status) value);
                     break;
+                case ID:
+                    existingSubTask.setTaskId((Integer) value);
                 default:
                     break;
             }

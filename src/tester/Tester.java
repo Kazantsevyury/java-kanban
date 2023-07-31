@@ -2,6 +2,7 @@ package tester;
 
 import data.Epic;
 import data.SubTask;
+import enums.Field;
 import managers.implementation.FileBackedTasksManager;
 import utilities.FieldModifier;
 import data.Task;
@@ -24,6 +25,15 @@ public class Tester {
         manager.addSubTask(subTaskZ);
         manager.addTask(taskY);
         manager.getAnyTaskById(epicX.getTaskId());
+        manager.getFieldModifier().updateEpic(epicX.getTaskId(), Field.ID,11111);
+        SubTask subTaskZy = new SubTask("subTaskYy","Description subTaskYy",epicX.getTaskId());
+        manager.addSubTask(subTaskZy);
+manager.updateEpicStatus();
+manager.updateEpicDurationAndStartTimeAndEndTime();
+        manager.getAnyTaskById(epicX.getTaskId());
+        for (Task task :manager.getPrioritizedTasks()) {
+            System.out.println(task.toString());
+        }
 
 
         manager.saveTasksToCsv();

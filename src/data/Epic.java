@@ -107,4 +107,11 @@ public class Epic extends Task {
     public TaskTypes getTaskTypes() {
         return taskTypes;
     }
+
+    @Override
+    public int getTaskId() {
+        return taskId;
+    }
+
+
 }

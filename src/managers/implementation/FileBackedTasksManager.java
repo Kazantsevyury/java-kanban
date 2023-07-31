@@ -13,8 +13,8 @@ import java.time.LocalDate;
 import java.util.*;
 
 public class FileBackedTasksManager extends InMemoryTaskManager {
-    String CSV_FILE_PATH;
-    File csvFile ;
+    protected final String CSV_FILE_PATH;
+    protected File csvFile ;
     public FileBackedTasksManager(String CSV_FILE_PATH) {
         super();
         this.CSV_FILE_PATH = CSV_FILE_PATH;
@@ -126,7 +126,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
 
 
     private LocalDate parseLocalDate(String value) {
-        if (value != null) {
+        if (!(value.equals("null") )) {
             return LocalDate.parse(value);
         }
         return null;

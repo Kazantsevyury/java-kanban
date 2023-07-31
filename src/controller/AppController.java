@@ -8,13 +8,13 @@ import utilities.IdGenerator;
 
 public class AppController {
     private FileBackedTasksManager manager;
-    // private FieldModifier fieldModifier;
+    private FieldModifier fieldModifier;
     private Tester tester;
     String CSV_FILE_PATH = "src/resources/example.csv";
 
     public AppController() {
         manager  = Managers.getFileBackendTaskManager(CSV_FILE_PATH);
-        //fieldModifier = new FieldModifier(manager);
+        fieldModifier = new FieldModifier(manager);
         tester = new Tester(CSV_FILE_PATH);
     }
     public void run() {

@@ -40,6 +40,11 @@ public class Task {
         this.status = status;
     }
 
+    public void setTaskId(int taskId) {
+        this.taskId = taskId;
+    }
+
+
     public Task(String title, String description, int duration, String dateAsString ) {
         this.taskId = IdGenerator.getNextId();
         this.title = title;

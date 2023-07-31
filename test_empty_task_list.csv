@@ -1,0 +1,4 @@
+id,title,description,status,startTime,duration,typ,SUBTASKS/PARENTEPICID
+1,Task 1,Description 1,NEW,2023-07-30,60,TASK
+2,Task 2,Description 2,IN_PROGRESS,2023-07-31,90,TASK
+
