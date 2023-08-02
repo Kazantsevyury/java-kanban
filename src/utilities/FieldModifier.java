@@ -18,82 +18,84 @@ public class FieldModifier {
         this.inMemoryTaskManager = fileBackedTasksManager;
     }
 
-    public Task updateTask(int taskId, Field field, Object value) {
-        Task existingTask = inMemoryTaskManager.getTask(taskId);
-        if (existingTask != null) {
+    public Task updateTask(Task task, Field field, Object value) {
+        if (task != null) {
+            int taskIdToRemove = task.getTaskId();
             switch (field) {
                 case TITLE:
-                    existingTask.setTitle((String) value);
+                    task.setTitle((String) value);
                     break;
                 case DESCRIPTION:
-                    existingTask.setDescription((String) value);
+                    task.setDescription((String) value);
                     break;
                 case STATUS:
-                    existingTask.setStatus((Status) value);
+                    task.setStatus((Status) value);
                     break;
                 case ID:
-                    existingTask.setTaskId((Integer) value);
+                    task.setTaskId((Integer) value);
                     break;
 
                 default:
                     return null;
             }
-            inMemoryTaskManager.removeTask(taskId);
-            inMemoryTaskManager.addTask(existingTask);
-            return inMemoryTaskManager.getTask(taskId);
+            inMemoryTaskManager.removeTask(taskIdToRemove);
+            inMemoryTaskManager.addTask(task);
+            return task;
         }
         return null;
     }
 
-    public Epic updateEpic(int epicId, Field field, Object value) {
-        Epic existingEpic = inMemoryTaskManager.getEpic(epicId);
-        if (existingEpic != null) {
+    public Epic updateEpic(Epic epic, Field field, Object value) {
+        if (epic != null) {
+            int epicToRemove = epic.getTaskId();
+
             switch (field) {
                 case TITLE:
-                    existingEpic.setTitle((String) value);
+                    epic.setTitle((String) value);
                     break;
                 case DESCRIPTION:
-                    existingEpic.setDescription((String) value);
+                    epic.setDescription((String) value);
                     break;
                 case STATUS:
-                    existingEpic.setStatus((Status) value);
+                    epic.setStatus((Status) value);
                     break;
                 case ID:
-                    existingEpic.setTaskId((Integer) value);
+                    epic.setTaskId((Integer) value);
                     break;
                 default:
                     return null;
             }
-            inMemoryTaskManager.removeEpic(epicId);
-            inMemoryTaskManager.addEpic(existingEpic);
+            inMemoryTaskManager.removeEpic(epicToRemove);
+            inMemoryTaskManager.addEpic(epic);
             inMemoryTaskManager.updateEpicStatus();
-            return inMemoryTaskManager.getEpic(epicId);
+            return epic;
         }
         return null;
     }
 
-    public SubTask updateSubTask(int subTaskId, Field field, Object value)  {
-        SubTask existingSubTask = inMemoryTaskManager.getSubTask(subTaskId);
-        if (existingSubTask != null) {
+    public SubTask updateSubTask(SubTask subTask, Field field, Object value)  {
+        if (subTask != null) {
+            int subTaskIdToRemove = subTask.getTaskId();
+
             switch (field) {
                 case TITLE:
-                    existingSubTask.setTitle((String) value);
+                    subTask.setTitle((String) value);
                     break;
                 case DESCRIPTION:
-                    existingSubTask.setDescription((String) value);
+                    subTask.setDescription((String) value);
                     break;
                 case STATUS:
-                    existingSubTask.setStatus((Status) value);
+                    subTask.setStatus((Status) value);
                     break;
                 case ID:
-                    existingSubTask.setTaskId((Integer) value);
+                    subTask.setTaskId((Integer) value);
                 default:
                     break;
             }
-            inMemoryTaskManager.removeSubTask(subTaskId);
-            inMemoryTaskManager.addSubTask(existingSubTask);
+            inMemoryTaskManager.removeSubTask(subTaskIdToRemove);
+            inMemoryTaskManager.addSubTask(subTask);
             inMemoryTaskManager.updateEpicStatus();
-            return inMemoryTaskManager.getSubTask(subTaskId);
+            return subTask;
         }
         return null;
     }

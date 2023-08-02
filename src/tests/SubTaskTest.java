@@ -14,7 +14,6 @@ class SubTaskTest {
 
     @Test
     void testSubTaskConstructorAndGetters() {
-        // Test the constructors and getters of the SubTask class
         String title = "SubTask Sample";
         String description = "This is a subtask sample for testing.";
         int parentEpicId = 123;
@@ -37,7 +36,6 @@ class SubTaskTest {
 
     @Test
     void testToString() {
-        // Test the toString method
         int parentEpicId = 123;
         SubTask subTask = new SubTask("SubTask Sample", "Description", Status.IN_PROGRESS, parentEpicId, 120, LocalDate.of(2023, 7, 28));
 
@@ -47,7 +45,6 @@ class SubTaskTest {
 
     @Test
     void testToCSV() {
-        // Test the toCSV method
         int parentEpicId = 123;
         SubTask subTask = new SubTask("SubTask Sample", "Description", Status.IN_PROGRESS, parentEpicId, 120, LocalDate.of(2023, 7, 28));
 
@@ -57,7 +54,6 @@ class SubTaskTest {
 
     @Test
     void testGetTaskTypes() {
-        // Test the getTaskTypes method
         SubTask subTask = new SubTask("SubTask Sample", "Description", 123);
 
         assertEquals(TaskTypes.SUBTASK, subTask.getTaskTypes());
@@ -65,7 +61,6 @@ class SubTaskTest {
 
     @Test
     void testSetParentEpicId() {
-        // Test the setParentEpicId method
         SubTask subTask = new SubTask("SubTask Sample", "Description", 123);
 
         int newParentEpicId = 456;

@@ -226,10 +226,6 @@ abstract class TaskManagerTest<T extends TaskManager> {
     }
 
     @Test
-    void getHistoryManager() {
-    }
-
-    @Test
     void getAnyTaskById() {
         assertNull(taskManager.getAnyTaskById(999));
 

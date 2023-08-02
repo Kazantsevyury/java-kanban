@@ -8,7 +8,7 @@ import utilities.FieldModifier;
 import data.Task;
 import java.io.File;
 public class Tester {
-    String CSV_FILE_PATH ;
+    String CSV_FILE_PATH;
 
     public Tester(String CSV_FILE_PATH) {
         this.CSV_FILE_PATH = CSV_FILE_PATH;
@@ -25,15 +25,16 @@ public class Tester {
         manager.addSubTask(subTaskZ);
         manager.addTask(taskY);
         manager.getAnyTaskById(epicX.getTaskId());
-        manager.getFieldModifier().updateEpic(epicX.getTaskId(), Field.ID,11111);
+        manager.getFieldModifier().updateEpic(epicX, Field.ID,11111);
         SubTask subTaskZy = new SubTask("subTaskYy","Description subTaskYy",epicX.getTaskId());
         manager.addSubTask(subTaskZy);
-manager.updateEpicStatus();
-manager.updateEpicDurationAndStartTimeAndEndTime();
+        manager.updateEpicStatus();
+        manager.updateEpicDurationAndStartTimeAndEndTime();
         manager.getAnyTaskById(epicX.getTaskId());
         for (Task task :manager.getPrioritizedTasks()) {
             System.out.println(task.toString());
         }
+
 
 
         manager.saveTasksToCsv();

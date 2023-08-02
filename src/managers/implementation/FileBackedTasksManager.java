@@ -22,6 +22,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         loadTasksFromCsv(csvFile);
 
     }
+
     public void loadTasksFromCsv(File file) {
         if (csvFile.exists() && csvFile.length() > 1) {
             try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
@@ -124,7 +125,6 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         }
     }
 
-
     private LocalDate parseLocalDate(String value) {
         if (!(value.equals("null") )) {
             return LocalDate.parse(value);
@@ -171,6 +171,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
             throw new ManagerSaveException("Ошибка при сохранении задач в CSV файл: " + e.getMessage());
         }
     }
+
     public void loadIdsToGenerator() {
             Set<Integer> loadedIds = new HashSet<>();
 
@@ -186,7 +187,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
                 loadedIds.add(subTask.getTaskId());
             }
             IdGenerator.loadUsedIds(loadedIds);
-        }
+    }
 
     @Override
     public void addSubTask(SubTask subTask) {
@@ -223,6 +224,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         super.removeEpic(epicId);
         saveTasksToCsv();
     }
+
     public void clearCsvFileExample() {
             String filePath = "test_empty_task_list.csv";
 

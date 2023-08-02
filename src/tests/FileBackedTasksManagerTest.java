@@ -116,13 +116,6 @@ class FileBackedTasksManagerTest extends TaskManagerTest {
 
     }
 
-
-    @Test
-    @Override
-    void getHistoryManager() {
-        assertNotNull(fileBackedTasksManager.getHistoryManager());
-    }
-
     @Test
     void getAnyTaskById() {
 
