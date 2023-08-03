@@ -5,12 +5,13 @@ import java.time.LocalDate;
 
 public class SubTask extends Task {
     private int parentEpicId;
-    private TaskTypes taskTypes = TaskTypes.SUBTASK;
+    private final TaskTypes taskTypes = TaskTypes.SUBTASK;
 
     public SubTask(String title, String description, int epicID, int duration, LocalDate startTime) {
         super(title, description, duration, startTime);
         this.parentEpicId = epicID;
     }
+
     public SubTask(String title, String description, int epicID) {
         super(title, description);
         this.parentEpicId = epicID;
@@ -20,14 +21,15 @@ public class SubTask extends Task {
         super(taskId, title, description, status, duration, startTime);
         this.parentEpicId = parentEpicId;
     }
-    public SubTask (String title, String description, int parentEpicId,int duration,String dateAsString ){
-        super(title,description,duration,dateAsString);
-        this.parentEpicId = parentEpicId;
-    }
 
     public SubTask(String title, String description, Status status, int parentEpicId, int duration, LocalDate startTime) {
         super(title, description, status,duration, startTime );
         this.parentEpicId = parentEpicId;
+    }
+
+    @Override
+    public TaskTypes getTaskTypes() {
+        return taskTypes;
     }
 
     public int getParentEpicId() {
@@ -52,9 +54,5 @@ public class SubTask extends Task {
         sb.append(",");
         sb.append(getParentEpicId());
         return sb.toString();
-    }
-    @Override
-    public TaskTypes getTaskTypes() {
-        return taskTypes;
     }
 }

@@ -18,14 +18,13 @@ import java.util.HashMap;
 import java.util.TreeSet;
 
 public class InMemoryTaskManager implements TaskManager {
-    private IdGenerator idGenerator;
-    private HistoryManager historyManager;
-    private FieldModifier fieldModifier;
-    private HashMap<Integer, Task> tasks;
-    private HashMap<Integer, SubTask> subTasks;
-    private HashMap<Integer, Epic> epics;
-    private TreeSet<Task> prioritizedTasks;
-
+    private final IdGenerator idGenerator;
+    private final HistoryManager historyManager;
+    private final FieldModifier fieldModifier;
+    private final HashMap<Integer, Task> tasks;
+    private final HashMap<Integer, SubTask> subTasks;
+    private final HashMap<Integer, Epic> epics;
+    private final TreeSet<Task> prioritizedTasks;
 
     public InMemoryTaskManager() {
         idGenerator = new IdGenerator();
@@ -89,7 +88,7 @@ public class InMemoryTaskManager implements TaskManager {
         tasks.put(task.getTaskId(), task);
         prioritizedTasks.add(task);
     }
-
+    @Override
     public void addSubTask(SubTask subTask) {
         if (checkForTimeIntersections(subTask)) {
             System.out.println("Внимание: Подзадача пересекается с существующими задачами.");
@@ -253,6 +252,7 @@ public class InMemoryTaskManager implements TaskManager {
             }
         }
     }
+    @Override
     public void updateEpicDurationAndStartTimeAndEndTime() {
         for (Epic epic : epics.values()) {
             ArrayList<Integer> subTaskIds = epic.getSubTasks();
@@ -287,7 +287,7 @@ public class InMemoryTaskManager implements TaskManager {
         }
     }
 
-    private boolean checkForTimeIntersections(Task task) {
+    public boolean checkForTimeIntersections(Task task) {
         for (Task otherTask : prioritizedTasks) {
             if (task.getTaskId() != otherTask.getTaskId()) {
                 if (hasTimeIntersection(task, otherTask)) {
@@ -297,7 +297,7 @@ public class InMemoryTaskManager implements TaskManager {
         }
         return false;
     }
-    private boolean hasTimeIntersection(Task task1, Task task2) {
+    public boolean hasTimeIntersection(Task task1, Task task2) {
         LocalDate rowStartTime1 = task1.getStartTime();
         LocalDate rowStartTime2 = task2.getStartTime();
 

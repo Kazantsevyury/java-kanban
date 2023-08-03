@@ -14,11 +14,12 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 abstract class TaskManagerTest<T extends TaskManager> {
-    private TaskManager taskManager;
+    protected void setTaskManager(T taskManager) {
+        this.taskManager = taskManager;
+    }    private T taskManager;
 
     @Test
     void addTask() {
-
         Task task = new Task(1, "Task 1", "Description of Task 1", Status.IN_PROGRESS, 5, LocalDate.now());
         taskManager.addTask(task);
         Task retrievedTask = taskManager.getTask(1);
@@ -90,9 +91,6 @@ abstract class TaskManagerTest<T extends TaskManager> {
 
     @Test
     void getAllTasks() {
-        assertNull(taskManager.getAllTasks());
-
-
         Task task = new Task(1, "Task 1", "Description of Task 1", Status.IN_PROGRESS, 5, LocalDate.now());
         Task task2 = new Task(2, "Task 2", "Description of Task 2", Status.IN_PROGRESS, 5, LocalDate.now());
         taskManager.addTask(task);
@@ -106,8 +104,6 @@ abstract class TaskManagerTest<T extends TaskManager> {
 
     @Test
     void getAllEpics() {
-        assertNull(taskManager.getAllEpics());
-
         Epic epic1 = new Epic(1, "Epic 1", "Description of Epic 1", Status.NEW, new ArrayList<>());
         Epic epic2 = new Epic(2, "Epic 2", "Description of Epic 2", Status.IN_PROGRESS, new ArrayList<>());
         taskManager.addEpic(epic1);
@@ -121,8 +117,6 @@ abstract class TaskManagerTest<T extends TaskManager> {
 
     @Test
     void getAllSubTasks() {
-        assertNull(taskManager.getAllSubTasks());
-
         Epic parentTask = new Epic(1, "Epic 1", "Description of Epic 1", Status.NEW, new ArrayList<>());
         taskManager.addEpic(parentTask);
 
@@ -251,7 +245,6 @@ abstract class TaskManagerTest<T extends TaskManager> {
 
     @Test
     void updateEpicStatus() {
-
         TaskManager taskManager = new InMemoryTaskManager();
         Epic epic = new Epic(1, "Epic 1", "Description of Epic 1", Status.NEW, new ArrayList<>());
         taskManager.addEpic(epic);

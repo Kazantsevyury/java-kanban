@@ -6,8 +6,7 @@ import utilities.IdGenerator;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
+
 
 public class Task {
     protected int taskId;
@@ -40,11 +39,6 @@ public class Task {
         this.status = status;
     }
 
-    public void setTaskId(int taskId) {
-        this.taskId = taskId;
-    }
-
-
     public Task(String title, String description, int duration, String dateAsString ) {
         this.taskId = IdGenerator.getNextId();
         this.title = title;
@@ -53,6 +47,7 @@ public class Task {
         this.duration = duration;
         this.startTime = LocalDate.parse(dateAsString);
     }
+
     public Task(String title, String description, Status status, int duration, LocalDate startTime ) {
         this.taskId = IdGenerator.getNextId();
         this.title = title;
@@ -61,6 +56,7 @@ public class Task {
         this.duration = duration;
         this.startTime = startTime ;
     }
+
     public Task(String title, String description, int duration, LocalDate startTime) {
         this.taskId = IdGenerator.getNextId();
         this.title = title;
@@ -88,6 +84,7 @@ public class Task {
         this.duration = duration;
         this.startTime = startTime;
     }
+
     public Task(String title, String description, Status status, TaskTypes taskTypes, int duration,String dateAsString) {
         this.taskId = IdGenerator.getNextId();
         this.title = title;
@@ -98,48 +95,29 @@ public class Task {
         this.startTime = LocalDate.parse(dateAsString);
     }
 
-
     public int getTaskId() {
         return taskId;
     }
+
     public String getTitle() {
         return title;
     }
+
     public String getDescription() {
         return description;
     }
+
     public Status getStatus() {
         return status;
     }
+
     public int getDuration() {
         return duration;
     }
+
     public LocalDate getStartTime() {
         return startTime;
     }
-    public void setDuration(int duration) {
-        this.duration = duration;
-    }
-
-    public void setStartTime(LocalDate startTime) {
-        this.startTime = startTime;
-    }
-    public void setStartTime(String dateAsString) {
-        this.startTime = LocalDate.parse(dateAsString);
-    }
-
-
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-    public void setDescription(String description) {
-        this.description = description;
-    }
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
 
     public LocalDateTime getEndTime() {
         if (startTime != null && duration > 0) {
@@ -149,16 +127,38 @@ public class Task {
         }
         return null;
     }
-
-    @Override
-    public String toString() {
-        return "Task ID: " + taskId + "\nTitle: " + title + "\nDescription: " + description + "\nStatus: " + status
-                + "\nDuration: " + duration + " minutes" + "\nStart Time: " + startTime;
-    }
-
     public TaskTypes getTaskTypes() {
         return taskTypes;
     }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
+    public void setStartTime(LocalDate startTime) {
+        this.startTime = startTime;
+    }
+
+    public void setStartTime(String dateAsString) {
+        this.startTime = LocalDate.parse(dateAsString);
+    }
+
+    public void setTaskId(int taskId) {
+        this.taskId = taskId;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
     public String toCSV() {
         StringBuilder sb = new StringBuilder();
         sb.append(taskId);
@@ -177,8 +177,10 @@ public class Task {
 
         return sb.toString();
     }
+
+    @Override
+    public String toString() {
+        return "Task ID: " + taskId + "\nTitle: " + title + "\nDescription: " + description + "\nStatus: " + status
+                + "\nDuration: " + duration + " minutes" + "\nStart Time: " + startTime;
+    }
 }
-
-
-
-

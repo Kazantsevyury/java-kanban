@@ -2,15 +2,16 @@ package controller;
 
 import managers.Managers;
 import managers.implementation.FileBackedTasksManager;
+import managers.implementation.InMemoryHistoryManager;
 import utilities.FieldModifier;
 import tester.Tester;
-import utilities.IdGenerator;
 
 public class AppController {
-    private FileBackedTasksManager manager;
-    private FieldModifier fieldModifier;
-    private Tester tester;
-    String CSV_FILE_PATH = "src/resources/example.csv";
+    private final FileBackedTasksManager manager;
+    private final FieldModifier fieldModifier;
+    private final Tester tester;
+    private InMemoryHistoryManager inMemoryHistoryManager;
+    protected static String CSV_FILE_PATH = "src/resources/example.csv";
 
     public AppController() {
         manager  = Managers.getFileBackendTaskManager(CSV_FILE_PATH);

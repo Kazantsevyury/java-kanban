@@ -1,7 +1,6 @@
 package tests;
 
-import data.Epic;
-import data.Task;import data.SubTask;
+import data.Task;
 import enums.Status;
 import managers.implementation.FileBackedTasksManager;
 import org.junit.jupiter.api.AfterEach;
@@ -10,24 +9,23 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class FileBackedTasksManagerTest extends TaskManagerTest {
     private static final String CSV_FILE_PATH = "test_tasks.csv";
-    private FileBackedTasksManager fileBackedTasksManager;
+    private FileBackedTasksManager tasksManager;
 
     @BeforeEach
     void setUp() {
-        fileBackedTasksManager = createTaskManager();
+        tasksManager = new FileBackedTasksManager(CSV_FILE_PATH);
+        setTaskManager(tasksManager);
     }
 
     @AfterEach
     void tearDown() {
         clearTaskManager();
     }
-
 
     protected FileBackedTasksManager createTaskManager() {
         return new FileBackedTasksManager(CSV_FILE_PATH);
@@ -39,92 +37,7 @@ class FileBackedTasksManagerTest extends TaskManagerTest {
             file.delete();
         }
     }
-    @Test
-    void addTask() {
-    }
 
-    @Test
-    void addEpic() {
-
-    }
-
-    @Test
-    void addSubTask() {
-
-    }
-
-
-    @Test
-    void getTask() {
-    }
-
-    @Test
-    void getSubTask() {
-
-    }
-
-    @Test
-
-    void getEpic() {
-
-    }
-
-    @Test
-
-    void getAllTasks() {
-
-    }
-
-    @Test
-    void getAllEpics() {
-
-    }
-
-    @Test
-    void getAllSubTasks() {
-
-    }
-
-    @Test
-    void clearAllTasks() {
-
-    }
-
-    @Test
-    void clearAllEpics() {
-
-    }
-
-    @Test
-    void clearAllSubTasks() {
-
-    }
-
-
-    @Test
-    void removeTask() {
-
-    }
-
-    @Test
-    void removeEpic() {
-
-    }
-
-    @Test
-    void removeSubTask() {
-
-    }
-
-    @Test
-    void getAnyTaskById() {
-
-    }
-
-    @Test
-    void updateEpicStatus() {
-
-    }
     @Test
     void testEmptyTaskListSaveAndRestore() {
         FileBackedTasksManager fileBackedTasksManager = new FileBackedTasksManager("test_empty_task_list.csv");

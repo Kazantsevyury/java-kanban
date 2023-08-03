@@ -10,26 +10,13 @@ import java.util.ArrayList;
 public class Epic extends Task {
     private ArrayList<Integer> subTasks;
     private LocalDateTime endTime;
+    private TaskTypes taskTypes = TaskTypes.EPIC;
+
 
     public Epic(int taskId, String title, String description, Status status, int duration, LocalDate startTime) {
         super(taskId,title,description,status,duration,startTime);
         this.subTasks = new ArrayList<Integer>();
     }
-
-    @Override
-    public LocalDateTime getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(LocalDateTime endTime) {
-        this.endTime = endTime;
-    }
-
-    public void setTaskTypes(TaskTypes taskTypes) {
-        this.taskTypes = taskTypes;
-    }
-
-    private TaskTypes taskTypes = TaskTypes.EPIC;
 
     public Epic(String title, String description ) {
         super(title, description);
@@ -41,21 +28,8 @@ public class Epic extends Task {
         this.subTasks = subTasks;
     }
 
-    public Epic(String title, String description, ArrayList<Integer> subTasks, LocalDateTime endTime, TaskTypes taskTypes, LocalDate startTime, int duration) {
-        super(title, description,duration, startTime);
-        this.subTasks = subTasks;
-        this.taskTypes = taskTypes;
-    }
-
     public Epic(String title, String description, int duration, LocalDate startTime, ArrayList<Integer> subTasks, LocalDateTime endTime, TaskTypes taskTypes) {
         super(title, description, duration, startTime);
-        this.subTasks = subTasks;
-        this.endTime = endTime;
-        this.taskTypes = taskTypes;
-    }
-
-    public Epic(int taskId, String title, String description, Status status, int duration, LocalDate startTime, ArrayList<Integer> subTasks, LocalDateTime endTime, TaskTypes taskTypes) {
-        super(taskId, title, description, status, duration, startTime);
         this.subTasks = subTasks;
         this.endTime = endTime;
         this.taskTypes = taskTypes;
@@ -65,10 +39,13 @@ public class Epic extends Task {
         this.subTasks = subTasks;
     }
 
-    public ArrayList<Integer> getSubTasks() {
-        return subTasks;
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
     }
 
+    public void setTaskTypes(TaskTypes taskTypes) {
+        this.taskTypes = taskTypes;
+    }
 
     @Override
     public String toString() {
@@ -109,9 +86,16 @@ public class Epic extends Task {
     }
 
     @Override
+    public LocalDateTime getEndTime() {
+        return endTime;
+    }
+
+    @Override
     public int getTaskId() {
         return taskId;
     }
 
-
+    public ArrayList<Integer> getSubTasks() {
+        return subTasks;
+    }
 }

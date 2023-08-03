@@ -1,0 +1,6 @@
+id,title,description,status,startTime,duration,typ,SUBTASKS/PARENTEPICID
+3,task Y,Description task Y,NEW,2023-08-03,240,TASK
+11111,EpicX,Description EX,NEW,2023-08-03,240,EPIC,2,4
+4,subTaskYy,Description subTaskYy,NEW,2023-08-03,240,SUBTASK,11111
+
+11111
