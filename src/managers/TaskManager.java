@@ -6,6 +6,7 @@ import data.Task;
 import utilities.FieldModifier;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface TaskManager {
     void addTask(Task task);
@@ -13,6 +14,11 @@ public interface TaskManager {
     void addSubTask(SubTask subTask);
 
     void addEpic(Epic epic);
+    Task createTask(Task task);
+
+    Epic createEpic(Epic epic);
+
+    SubTask createSubtask(SubTask subtask);
 
     Task getTask(int taskId);
 
@@ -46,7 +52,14 @@ public interface TaskManager {
     Task getAnyTaskById(int taskId);
 
     void updateEpicStatus();
+    void updateTask(Task task);
+
+    void updateEpic(Epic epic);
+
+    void updateSubtask(SubTask subtask);
 
     void updateEpicDurationAndStartTimeAndEndTime();
+    List<Task> getPrioritizedTasks();
+
 
 }

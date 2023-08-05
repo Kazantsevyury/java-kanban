@@ -14,7 +14,7 @@ public class Task {
     private String description;
     private Status status;
     private TaskTypes taskTypes = TaskTypes.TASK;
-    private LocalDate startTime;
+    private LocalDateTime startTime;
 
     private int duration;
     public Task(String title, String description ) {
@@ -23,7 +23,7 @@ public class Task {
         this.description = description;
         this.status = Status.NEW;
         this.duration = 240;
-        this.startTime = LocalDate.now();
+        this.startTime = LocalDateTime.now();
     }
 
     public Task(int taskId, String title, String description) {
@@ -45,7 +45,7 @@ public class Task {
         this.description = description;
         this.status = Status.NEW;
         this.duration = duration;
-        this.startTime = LocalDate.parse(dateAsString);
+        this.startTime = LocalDateTime.parse(dateAsString);
     }
 
     public Task(String title, String description, Status status, int duration, LocalDate startTime ) {
@@ -54,8 +54,7 @@ public class Task {
         this.description = description;
         this.status = status;
         this.duration = duration;
-        this.startTime = startTime ;
-    }
+        this.startTime = startTime.atStartOfDay();    }
 
     public Task(String title, String description, int duration, LocalDate startTime) {
         this.taskId = IdGenerator.getNextId();
@@ -63,8 +62,7 @@ public class Task {
         this.description = description;
         this.status = Status.NEW;
         this.duration = duration;
-        this.startTime = startTime;
-    }
+        this.startTime = startTime.atStartOfDay();    }
 
     public Task(String title, String description, Status status, TaskTypes taskTypes, LocalDate startTime, int duration) {
         this.taskId = IdGenerator.getNextId();
@@ -72,7 +70,7 @@ public class Task {
         this.description = description;
         this.status = status;
         this.taskTypes = taskTypes;
-        this.startTime = startTime;
+        this.startTime = startTime.atStartOfDay();
         this.duration = duration;
     }
 
@@ -82,8 +80,7 @@ public class Task {
         this.description = description;
         this.status = status;
         this.duration = duration;
-        this.startTime = startTime;
-    }
+        this.startTime = startTime.atStartOfDay();    }
 
     public Task(String title, String description, Status status, TaskTypes taskTypes, int duration,String dateAsString) {
         this.taskId = IdGenerator.getNextId();
@@ -92,7 +89,7 @@ public class Task {
         this.status = status;
         this.taskTypes = taskTypes;
         this.duration = duration;
-        this.startTime = LocalDate.parse(dateAsString);
+        this.startTime = LocalDateTime.parse(dateAsString);
     }
 
     public int getTaskId() {
@@ -115,13 +112,13 @@ public class Task {
         return duration;
     }
 
-    public LocalDate getStartTime() {
+    public LocalDateTime getStartTime() {
         return startTime;
     }
 
     public LocalDateTime getEndTime() {
         if (startTime != null && duration > 0) {
-            LocalDateTime startDateTime = startTime.atStartOfDay();
+            LocalDateTime startDateTime = startTime;
             LocalDateTime endDateTime = startDateTime.plusMinutes(duration);
             return endDateTime;
         }
@@ -135,12 +132,12 @@ public class Task {
         this.duration = duration;
     }
 
-    public void setStartTime(LocalDate startTime) {
+    public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
     }
 
     public void setStartTime(String dateAsString) {
-        this.startTime = LocalDate.parse(dateAsString);
+        this.startTime = LocalDate.parse(dateAsString).atStartOfDay();
     }
 
     public void setTaskId(int taskId) {

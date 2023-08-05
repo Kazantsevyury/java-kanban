@@ -18,7 +18,7 @@ class FileBackedTasksManagerTest extends TaskManagerTest {
 
     @BeforeEach
     void setUp() {
-        tasksManager = new FileBackedTasksManager(CSV_FILE_PATH);
+        tasksManager = new FileBackedTasksManager();
         setTaskManager(tasksManager);
     }
 
@@ -28,7 +28,7 @@ class FileBackedTasksManagerTest extends TaskManagerTest {
     }
 
     protected FileBackedTasksManager createTaskManager() {
-        return new FileBackedTasksManager(CSV_FILE_PATH);
+        return new FileBackedTasksManager();
     }
 
     protected void clearTaskManager() {
@@ -40,7 +40,8 @@ class FileBackedTasksManagerTest extends TaskManagerTest {
 
     @Test
     void testEmptyTaskListSaveAndRestore() {
-        FileBackedTasksManager fileBackedTasksManager = new FileBackedTasksManager("test_empty_task_list.csv");
+        FileBackedTasksManager fileBackedTasksManager = new FileBackedTasksManager();
+        //"test_empty_task_list.csv"
         fileBackedTasksManager.clearCsvFileExample();
         assertTrue(fileBackedTasksManager.getAllTasks().isEmpty());
 

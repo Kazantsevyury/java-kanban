@@ -13,15 +13,21 @@ import java.time.LocalDate;
 import java.util.*;
 
 public class FileBackedTasksManager extends InMemoryTaskManager {
-    protected final String CSV_FILE_PATH;
+    //protected final String CSV_FILE_PATH;
+    protected static String CSV_FILE_PATH ;
+
     protected File csvFile ;
 
-    public FileBackedTasksManager(String CSV_FILE_PATH) {
+    public FileBackedTasksManager() {
         super();
-        this.CSV_FILE_PATH = CSV_FILE_PATH;
+        this.CSV_FILE_PATH  = "src/resources/example.csv";
         this.csvFile = new File(CSV_FILE_PATH);
         loadTasksFromCsv(csvFile);
 
+    }
+
+    public static void setCsvFilePath(String csvFilePath) {
+        CSV_FILE_PATH = csvFilePath;
     }
 
     public void loadTasksFromCsv(File file) {
