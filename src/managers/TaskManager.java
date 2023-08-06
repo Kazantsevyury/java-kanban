@@ -61,5 +61,4 @@ public interface TaskManager {
     void updateEpicDurationAndStartTimeAndEndTime();
     List<Task> getPrioritizedTasks();
 
-
 }

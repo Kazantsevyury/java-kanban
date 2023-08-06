@@ -33,11 +33,7 @@ public class InMemoryTaskManager implements TaskManager {
         epics = new HashMap<>();
         prioritizedTasks = new TreeSet<>(Comparator.comparing(Task::getStartTime, Comparator.nullsLast(Comparator.naturalOrder())));
         this.fieldModifier = new FieldModifier(this);
-
     }
-    //public TreeSet<Task> getPrioritizedTasks() {
-    //    return new TreeSet<>(prioritizedTasks);
-    //}
 
     private void addAllTasksToPrioritizedSet() {
         if (tasks != null) {
@@ -50,10 +46,12 @@ public class InMemoryTaskManager implements TaskManager {
             prioritizedTasks.addAll(epics.values());
         }
     }
+
     @Override
     public HistoryManager getHistoryManager() {
         return historyManager;
     }
+
     @Override
     public Task getAnyTaskById(int taskId) {
         Task task = tasks.get(taskId);
@@ -87,6 +85,7 @@ public class InMemoryTaskManager implements TaskManager {
         tasks.put(task.getTaskId(), task);
         prioritizedTasks.add(task);
     }
+
     @Override
     public void addSubTask(SubTask subTask) {
         if (checkForTimeIntersections(subTask)) {
@@ -124,6 +123,7 @@ public class InMemoryTaskManager implements TaskManager {
     public FieldModifier getFieldModifier() {
         return fieldModifier;
     }
+
     @Override
     public Task createTask(Task task) {
         if (task == null) return null;
@@ -163,6 +163,7 @@ public class InMemoryTaskManager implements TaskManager {
             return null;
         }
     }
+
     @Override
     public Task getTask(int taskId) {
         Task task = tasks.get(taskId);
@@ -196,12 +197,14 @@ public class InMemoryTaskManager implements TaskManager {
         allTasks.addAll(tasks.values());
         return allTasks;
     }
+
     @Override
     public ArrayList<Epic> getAllEpics() {
         ArrayList<Epic> allEpics = new ArrayList<>();
         allEpics.addAll(epics.values());
         return allEpics;
     }
+
     @Override
     public ArrayList<SubTask> getAllSubTasks() {
         ArrayList<SubTask> allSubTasks = new ArrayList<>();
@@ -214,11 +217,13 @@ public class InMemoryTaskManager implements TaskManager {
         tasks.clear();
         updateEpicStatus();
     }
+
     @Override
     public void clearAllEpics() {
         epics.clear();
         subTasks.clear();
     }
+
     @Override
     public void clearAllSubTasks() {
         subTasks.clear();
@@ -233,6 +238,7 @@ public class InMemoryTaskManager implements TaskManager {
             historyManager.remove(taskId);
         }
     }
+
     @Override
     public void removeEpic(int epicId) {
         ArrayList<Integer> subTaskIdsToRemove = new ArrayList<>();
@@ -255,12 +261,14 @@ public class InMemoryTaskManager implements TaskManager {
 
         updateEpicStatus();
     }
+
     @Override
     public void removeSubTask(int subTaskId) {
         subTasks.remove(subTaskId);
         historyManager.remove(subTaskId);
         updateEpicStatus();
     }
+
     @Override
     public void updateTask(Task task) {
         if (task != null && tasks.containsKey(task.getTaskId())) {
@@ -293,6 +301,7 @@ public class InMemoryTaskManager implements TaskManager {
             System.out.println("Epic not found");
         }
     }
+
     @Override
     public void updateSubtask(SubTask subtask) {
         if (subtask != null && subTasks.containsKey(subtask.getTaskId())) {
@@ -333,6 +342,7 @@ public class InMemoryTaskManager implements TaskManager {
             }
         }
     }
+
     @Override
     public void updateEpicDurationAndStartTimeAndEndTime() {
         for (Epic epic : epics.values()) {
@@ -378,6 +388,7 @@ public class InMemoryTaskManager implements TaskManager {
         }
         return false;
     }
+
     public boolean hasTimeIntersection(Task task1, Task task2) {
         LocalDateTime rowStartTime1 = task1.getStartTime();
         LocalDateTime rowStartTime2 = task2.getStartTime();
@@ -397,11 +408,11 @@ public class InMemoryTaskManager implements TaskManager {
         }
         return false;
     }
+
     private void addNewPrioritizedTask(Task task) {
         prioritizedTasks.add(task);
         validateTaskPriority();
     }
-
 
     public boolean checkTime(Task task) {
         List<Task> tasks = List.copyOf(prioritizedTasks);
@@ -431,7 +442,6 @@ public class InMemoryTaskManager implements TaskManager {
         }
     }
 
-
     private void validateTaskPriority() {
         List<Task> tasks = getPrioritizedTasks();
 
@@ -446,6 +456,7 @@ public class InMemoryTaskManager implements TaskManager {
             }
         }
     }
+
     @Override
     public List<Task> getPrioritizedTasks() {
         return prioritizedTasks.stream().collect(Collectors.toList());

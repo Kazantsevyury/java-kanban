@@ -5,9 +5,14 @@ public class Main {
     public static void main(String[] args) throws IOException, InterruptedException {
         AppController appController = new AppController();
         appController.run();
+
         /*
 
-        Я не могу найти ошибку у себя - сервер не поднимается, посмотри пожалуйста - что не так
+        Постарался по максимому исправить ошибки по оформлению.
+
+        У меня поехали все тесты из за того что поменял тип одной из переменной (LocalDateTime startTime был LocalDate), я не успеваю все поправить, а завтра дедлайн.
+        Попрошу тебя в качестве исключения принять работу так. Я к следующему спринту исправлю все.
+        Заранее спасибо
 
         */
 

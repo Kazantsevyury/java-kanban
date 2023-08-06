@@ -19,6 +19,4 @@ public class Managers  {
     public static HTTPTaskManager getDefault(HistoryManager historyManager) throws IOException, InterruptedException {
             return new HTTPTaskManager( "http://localhost:" + KVServer.PORT);
     }
-
-
 }

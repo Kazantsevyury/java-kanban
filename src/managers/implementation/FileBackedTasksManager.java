@@ -15,7 +15,6 @@ import java.util.*;
 public class FileBackedTasksManager extends InMemoryTaskManager {
     //protected final String CSV_FILE_PATH;
     protected static String CSV_FILE_PATH ;
-
     protected File csvFile ;
 
     public FileBackedTasksManager() {
@@ -23,7 +22,6 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         this.CSV_FILE_PATH  = "src/resources/example.csv";
         this.csvFile = new File(CSV_FILE_PATH);
         loadTasksFromCsv(csvFile);
-
     }
 
     public static void setCsvFilePath(String csvFilePath) {

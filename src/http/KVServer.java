@@ -68,6 +68,7 @@ public class KVServer {
             }
         }
     }
+
     private void save(HttpExchange httpExchange) throws IOException {
         try {
             System.out.println("\n/save");
@@ -108,7 +109,6 @@ public class KVServer {
         }
     }
 
-
     private void register(HttpExchange httpExchange) throws IOException {
         System.out.println("\n/register");
         if ("GET".equals(httpExchange.getRequestMethod())) {
@@ -126,7 +126,6 @@ public class KVServer {
             }
         }
     }
-
 
     public void start() {
         System.out.println("Запускаем сервер на порту " + PORT);

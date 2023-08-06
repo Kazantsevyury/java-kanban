@@ -27,11 +27,8 @@ public class HTTPTaskManager extends FileBackedTasksManager {
     final KVTaskClient client;
     private static final Gson gson = new GsonBuilder().registerTypeAdapter(Instant.class, new LocalDateTimeAdapter()).create();
 
-        public HTTPTaskManager( String path) throws IOException, InterruptedException
-        {
-
+        public HTTPTaskManager( String path) throws IOException, InterruptedException {
             client = new KVTaskClient(path);
-
 
             JsonElement jsonTasks = JsonParser.parseString(client.load(KEY_TASKS));
             if (!jsonTasks.isJsonNull()) {
@@ -76,7 +73,6 @@ public class HTTPTaskManager extends FileBackedTasksManager {
         }
         }
 
-
     public void save() {
         client.put(KEY_TASKS, gson.toJson(getTasks().values()));
         client.put(KEY_SUBTASKS, gson.toJson(getSubTasks().values()));
@@ -87,6 +83,4 @@ public class HTTPTaskManager extends FileBackedTasksManager {
                 .collect(Collectors.toList())));
     }
 
-
 }
-
