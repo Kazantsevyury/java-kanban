@@ -41,7 +41,6 @@ class FileBackedTasksManagerTest extends TaskManagerTest {
     @Test
     void testEmptyTaskListSaveAndRestore() {
         FileBackedTasksManager fileBackedTasksManager = new FileBackedTasksManager();
-        //"test_empty_task_list.csv"
         fileBackedTasksManager.clearCsvFileExample();
         assertTrue(fileBackedTasksManager.getAllTasks().isEmpty());
 

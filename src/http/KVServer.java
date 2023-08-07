@@ -58,7 +58,6 @@ public class KVServer {
         } catch (IOException e) {
             throw new RuntimeException(e);
         } finally {
-            // Закрыть OutputStream для освобождения ресурсов
             if (httpExchange != null) {
                 try {
                     httpExchange.getResponseBody().close();
@@ -98,7 +97,6 @@ public class KVServer {
                 httpExchange.sendResponseHeaders(405, 0);
             }
         } finally {
-            // Закрыть OutputStream для освобождения ресурсов
             if (httpExchange != null) {
                 try {
                     httpExchange.getResponseBody().close();
@@ -117,7 +115,6 @@ public class KVServer {
             System.out.println("/register ждёт GET-запрос, а получил " + httpExchange.getRequestMethod());
             httpExchange.sendResponseHeaders(405, 0);
         }
-        // Закрыть OutputStream для освобождения ресурсов
         if (httpExchange != null) {
             try {
                 httpExchange.getResponseBody().close();

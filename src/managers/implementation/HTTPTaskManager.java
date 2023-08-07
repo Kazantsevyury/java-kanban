@@ -25,9 +25,10 @@ public class HTTPTaskManager extends FileBackedTasksManager {
     final static String KEY_EPICS = "epics";
     final static String KEY_HISTORY = "history";
     final KVTaskClient client;
+
     private static final Gson gson = new GsonBuilder().registerTypeAdapter(Instant.class, new LocalDateTimeAdapter()).create();
 
-        public HTTPTaskManager( String path) throws IOException, InterruptedException {
+    public HTTPTaskManager( String path) throws IOException, InterruptedException {
             client = new KVTaskClient(path);
 
             JsonElement jsonTasks = JsonParser.parseString(client.load(KEY_TASKS));

@@ -13,7 +13,6 @@ import java.time.LocalDate;
 import java.util.*;
 
 public class FileBackedTasksManager extends InMemoryTaskManager {
-    //protected final String CSV_FILE_PATH;
     protected static String CSV_FILE_PATH ;
     protected File csvFile ;
 
